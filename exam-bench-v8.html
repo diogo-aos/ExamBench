@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exam Bench — AMC-TXT question bank</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+
+<!-- Theme applied before paint, so there's no light->dark flash on load -->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem('exam-bench-theme');
+      var dark = saved ? saved === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+      if (dark) document.documentElement.classList.add('dark');
+    } catch (e) {}
+  })();
+</script>
+
+<style>
+*,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/*! tailwindcss v3.4.13 | MIT License | https://tailwindcss.com*/*,:after,:before{box-sizing:border-box;border:0 solid #e5e7eb}:after,:before{--tw-content:""}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;-o-tab-size:4;tab-size:4;font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:IBM Plex Mono,ui-monospace,monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0}fieldset,legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::-moz-placeholder,textarea::-moz-placeholder{opacity:1;color:#9ca3af}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]{display:none}html{scroll-behavior:smooth}body{--tw-bg-opacity:1;background-color:rgb(247 244 237/var(--tw-bg-opacity));font-family:Space Grotesk,system-ui,sans-serif;--tw-text-opacity:1;color:rgb(14 18 24/var(--tw-text-opacity));-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}body:is(.dark *){--tw-bg-opacity:1;background-color:rgb(14 18 24/var(--tw-bg-opacity));--tw-text-opacity:1;color:rgb(247 244 237/var(--tw-text-opacity))}::-moz-selection{background-color:rgba(232,179,60,.4)}::selection{background-color:rgba(232,179,60,.4)}.btn-primary{height:2rem;border-radius:.375rem;padding-left:.875rem;padding-right:.875rem;font-size:12px;font-weight:600;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,-webkit-backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter,-webkit-backdrop-filter;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s;--tw-bg-opacity:1;background-color:rgb(232 179 60/var(--tw-bg-opacity));--tw-text-opacity:1;color:rgb(14 18 24/var(--tw-text-opacity))}.btn-primary:hover{--tw-brightness:brightness(1.1);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.btn-neutral{height:2rem;border-radius:.375rem;padding-left:.875rem;padding-right:.875rem;font-size:12px;font-weight:600;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,-webkit-backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter,-webkit-backdrop-filter;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s;--tw-bg-opacity:1;background-color:rgb(235 238 241/var(--tw-bg-opacity));--tw-text-opacity:1;color:rgb(14 18 24/var(--tw-text-opacity))}.btn-neutral:hover{--tw-bg-opacity:1;background-color:rgb(216 221 228/var(--tw-bg-opacity))}.btn-neutral:is(.dark *){--tw-bg-opacity:1;background-color:rgb(42 51 64/var(--tw-bg-opacity));--tw-text-opacity:1;color:rgb(247 244 237/var(--tw-text-opacity))}.btn-neutral:hover:is(.dark *){--tw-bg-opacity:1;background-color:rgb(60 71 87/var(--tw-bg-opacity))}.btn-ghost{height:2rem;border-radius:.375rem;font-size:12px;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,-webkit-backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter,-webkit-backdrop-filter;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s;padding-left:.625rem;padding-right:.625rem;font-weight:500;--tw-text-opacity:1;color:rgb(100 116 139/var(--tw-text-opacity))}.btn-ghost:hover{--tw-bg-opacity:1;background-color:rgb(235 238 241/var(--tw-bg-opacity));--tw-text-opacity:1;color:rgb(14 18 24/var(--tw-text-opacity))}.btn-ghost:is(.dark *){--tw-text-opacity:1;color:rgb(138 148 163/var(--tw-text-opacity))}.btn-ghost:hover:is(.dark *){--tw-bg-opacity:1;background-color:rgb(29 36 46/var(--tw-bg-opacity));--tw-text-opacity:1;color:rgb(247 244 237/var(--tw-text-opacity))}.btn-icon{display:grid;height:2rem;width:2rem;place-items:center;border-radius:.375rem;--tw-text-opacity:1;color:rgb(100 116 139/var(--tw-text-opacity));transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,-webkit-backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter,-webkit-backdrop-filter;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.btn-icon:hover{--tw-bg-opacity:1;background-color:rgb(235 238 241/var(--tw-bg-opacity));--tw-text-opacity:1;color:rgb(14 18 24/var(--tw-text-opacity))}.btn-icon:is(.dark *){--tw-text-opacity:1;color:rgb(138 148 163/var(--tw-text-opacity))}.btn-icon:hover:is(.dark *){--tw-bg-opacity:1;background-color:rgb(29 36 46/var(--tw-bg-opacity));--tw-text-opacity:1;color:rgb(247 244 237/var(--tw-text-opacity))}.mini-btn{height:1.5rem;border-radius:.25rem;border-width:1px;--tw-border-opacity:1;border-color:rgb(216 221 228/var(--tw-border-opacity));padding-left:.625rem;padding-right:.625rem;font-family:IBM Plex Mono,ui-monospace,monospace;font-size:10.5px;--tw-text-opacity:1;color:rgb(100 116 139/var(--tw-text-opacity));transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,-webkit-backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter,-webkit-backdrop-filter;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.mini-btn:hover{--tw-border-opacity:1;border-color:rgb(232 179 60/var(--tw-border-opacity));--tw-bg-opacity:1;background-color:rgb(232 179 60/var(--tw-bg-opacity));--tw-text-opacity:1;color:rgb(14 18 24/var(--tw-text-opacity))}.mini-btn:is(.dark *){--tw-border-opacity:1;border-color:rgb(42 51 64/var(--tw-border-opacity));--tw-text-opacity:1;color:rgb(138 148 163/var(--tw-text-opacity))}.mini-btn:hover:is(.dark *){--tw-text-opacity:1;color:rgb(14 18 24/var(--tw-text-opacity))}.surface{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity))}.surface:is(.dark *){--tw-bg-opacity:1;background-color:rgb(21 26 34/var(--tw-bg-opacity))}.surface-deep{--tw-bg-opacity:1;background-color:rgb(239 234 224/var(--tw-bg-opacity))}.surface-deep:is(.dark *){--tw-bg-opacity:1;background-color:rgb(29 36 46/var(--tw-bg-opacity))}.surface-sunk{--tw-bg-opacity:1;background-color:rgb(247 244 237/var(--tw-bg-opacity))}.surface-sunk:is(.dark *){--tw-bg-opacity:1;background-color:rgb(14 18 24/var(--tw-bg-opacity))}.edge{--tw-border-opacity:1;border-color:rgb(230 224 211/var(--tw-border-opacity))}.edge:is(.dark *){--tw-border-opacity:1;border-color:rgb(42 51 64/var(--tw-border-opacity))}.edge-soft{border-color:hsla(41,28%,86%,.7)}.edge-soft:is(.dark *){--tw-border-opacity:1;border-color:rgb(29 36 46/var(--tw-border-opacity))}.pane-label{font-family:IBM Plex Mono,ui-monospace,monospace;font-size:10px;letter-spacing:.18em;--tw-text-opacity:1;color:rgb(100 116 139/var(--tw-text-opacity))}.pane-label:is(.dark *){--tw-text-opacity:1;color:rgb(138 148 163/var(--tw-text-opacity))}.field-input{height:2.25rem;width:100%;border-radius:.375rem;border-width:1px;--tw-border-opacity:1;border-color:rgb(216 221 228/var(--tw-border-opacity));--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity));padding-left:.75rem;padding-right:.75rem;font-family:IBM Plex Mono,ui-monospace,monospace;font-size:13px;--tw-text-opacity:1;color:rgb(14 18 24/var(--tw-text-opacity));outline:2px solid transparent;outline-offset:2px}.field-input:focus{--tw-border-opacity:1;border-color:rgb(232 179 60/var(--tw-border-opacity))}.field-input:is(.dark *){--tw-border-opacity:1;border-color:rgb(42 51 64/var(--tw-border-opacity));--tw-bg-opacity:1;background-color:rgb(14 18 24/var(--tw-bg-opacity));--tw-text-opacity:1;color:rgb(247 244 237/var(--tw-text-opacity))}.field-label{font-family:IBM Plex Mono,ui-monospace,monospace;font-size:10px;letter-spacing:.16em;--tw-text-opacity:1;color:rgb(100 116 139/var(--tw-text-opacity))}.field-label:is(.dark *){--tw-text-opacity:1;color:rgb(138 148 163/var(--tw-text-opacity))}.toggle-row{display:flex;cursor:pointer;align-items:center;gap:.5rem;font-size:12px;--tw-text-opacity:1;color:rgb(71 85 105/var(--tw-text-opacity))}.toggle-row:is(.dark *){--tw-text-opacity:1;color:rgb(138 148 163/var(--tw-text-opacity))}@keyframes fade{0%{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}.qcard{animation:fade .28s ease both;overflow:hidden;border-radius:.5rem;border-width:1px;--tw-border-opacity:1;border-color:rgb(230 224 211/var(--tw-border-opacity));background-color:hsla(0,0%,100%,.7)}.qcard:is(.dark *){--tw-border-opacity:1;border-color:rgb(42 51 64/var(--tw-border-opacity));background-color:rgba(21,26,34,.7)}.qcard-bad{border-color:rgba(216,84,60,.5);background-color:rgba(216,84,60,.05)}.qcard-bad:is(.dark *){background-color:rgba(216,84,60,.1)}.bubble{display:grid;height:1rem;width:1rem;place-items:center;border-radius:9999px;border-width:1.5px;--tw-border-opacity:1;border-color:rgb(183 191 201/var(--tw-border-opacity));font-family:IBM Plex Mono,ui-monospace,monospace;font-size:9px;line-height:1;--tw-text-opacity:1;color:rgb(90 102 117/var(--tw-text-opacity))}.bubble:is(.dark *){--tw-border-opacity:1;border-color:rgb(60 71 87/var(--tw-border-opacity));--tw-text-opacity:1;color:rgb(138 148 163/var(--tw-text-opacity))}.bubble-on{--tw-border-opacity:1;border-color:rgb(165 121 28/var(--tw-border-opacity));--tw-bg-opacity:1;background-color:rgb(232 179 60/var(--tw-bg-opacity));font-weight:600;--tw-text-opacity:1;color:rgb(58 44 8/var(--tw-text-opacity))}.modal-box{margin-left:auto;margin-right:auto;max-width:48rem;overflow:hidden;border-radius:.75rem;border-width:1px;--tw-border-opacity:1;border-color:rgb(230 224 211/var(--tw-border-opacity));--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity));--tw-shadow:0 25px 50px -12px rgba(0,0,0,.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.modal-box:is(.dark *){--tw-border-opacity:1;border-color:rgb(42 51 64/var(--tw-border-opacity));--tw-bg-opacity:1;background-color:rgb(21 26 34/var(--tw-bg-opacity))}.chip{border-radius:.25rem;border-width:1px;--tw-border-opacity:1;border-color:rgb(230 224 211/var(--tw-border-opacity));--tw-bg-opacity:1;background-color:rgb(247 244 237/var(--tw-bg-opacity));padding:.25rem .375rem;font-family:IBM Plex Mono,ui-monospace,monospace;font-size:10.5px;--tw-text-opacity:1;color:rgb(100 116 139/var(--tw-text-opacity))}.chip:is(.dark *){--tw-border-opacity:1;border-color:rgb(42 51 64/var(--tw-border-opacity));--tw-bg-opacity:1;background-color:rgb(14 18 24/var(--tw-bg-opacity));--tw-text-opacity:1;color:rgb(138 148 163/var(--tw-text-opacity))}.rule{height:1px;background-image:repeating-linear-gradient(90deg,#e6e0d3 0 6px,transparent 6px 12px)}.dark .rule{background-image:repeating-linear-gradient(90deg,#2a3340 0 6px,transparent 6px 12px)}.fixed{position:fixed}.inset-0{inset:0}.bottom-5{bottom:1.25rem}.left-1\/2{left:50%}.z-40{z-index:40}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.mb-1\.5{margin-bottom:.375rem}.mb-2{margin-bottom:.5rem}.mb-2\.5{margin-bottom:.625rem}.mb-4{margin-bottom:1rem}.ml-auto{margin-left:auto}.mt-1{margin-top:.25rem}.mt-1\.5{margin-top:.375rem}.mt-2\.5{margin-top:.625rem}.mt-3{margin-top:.75rem}.block{display:block}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.h-11{height:2.75rem}.h-12{height:3rem}.h-14{height:3.5rem}.h-3\.5{height:.875rem}.h-4{height:1rem}.h-5{height:1.25rem}.h-8{height:2rem}.h-9{height:2.25rem}.h-\[calc\(100vh-3\.5rem\)\]{height:calc(100vh - 3.5rem)}.h-full{height:100%}.max-h-40{max-height:10rem}.min-h-0{min-height:0}.w-11{width:2.75rem}.w-24{width:6rem}.w-3\.5{width:.875rem}.w-4{width:1rem}.w-full{width:100%}.w-px{width:1px}.min-w-0{min-width:0}.max-w-xl{max-width:36rem}.max-w-xs{max-width:20rem}.flex-1{flex:1 1 0%}.shrink-0{flex-shrink:0}.-translate-x-1\/2{--tw-translate-x:-50%;transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.resize-none{resize:none}.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.place-items-center{place-items:center}.items-end{align-items:flex-end}.items-center{align-items:center}.items-baseline{align-items:baseline}.justify-end{justify-content:flex-end}.justify-between{justify-content:space-between}.gap-1\.5{gap:.375rem}.gap-2{gap:.5rem}.gap-2\.5{gap:.625rem}.gap-3{gap:.75rem}.gap-4{gap:1rem}.space-y-1>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.25rem*var(--tw-space-y-reverse))}.space-y-1\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.375rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.375rem*var(--tw-space-y-reverse))}.space-y-2\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.625rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.625rem*var(--tw-space-y-reverse))}.space-y-3>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.75rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.75rem*var(--tw-space-y-reverse))}.space-y-5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.25rem*var(--tw-space-y-reverse))}.space-y-6>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem*var(--tw-space-y-reverse))}.self-stretch{align-self:stretch}.overflow-auto{overflow:auto}.overflow-hidden,.truncate{overflow:hidden}.truncate{text-overflow:ellipsis;white-space:nowrap}.whitespace-pre-wrap{white-space:pre-wrap}.rounded{border-radius:.25rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:.5rem}.rounded-xl{border-radius:.75rem}.border{border-width:1px}.border-2{border-width:2px}.border-b{border-bottom-width:1px}.border-r{border-right-width:1px}.border-t{border-top-width:1px}.border-dashed{border-style:dashed}.border-ink-200{--tw-border-opacity:1;border-color:rgb(216 221 228/var(--tw-border-opacity))}.border-paper-edge{--tw-border-opacity:1;border-color:rgb(230 224 211/var(--tw-border-opacity))}.border-teal\/40{border-color:rgba(79,168,165,.4)}.bg-ink-900\/70{background-color:rgba(14,18,24,.7)}.bg-paper-edge{--tw-bg-opacity:1;background-color:rgb(230 224 211/var(--tw-bg-opacity))}.bg-teal\/15{background-color:rgba(79,168,165,.15)}.bg-teal\/20{background-color:rgba(79,168,165,.2)}.bg-teal\/5{background-color:rgba(79,168,165,.05)}.bg-transparent{background-color:transparent}.p-4{padding:1rem}.p-5{padding:1.25rem}.px-1\.5{padding-left:.375rem;padding-right:.375rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-8{padding-left:2rem;padding-right:2rem}.py-0\.5{padding-top:.125rem;padding-bottom:.125rem}.py-1\.5{padding-top:.375rem;padding-bottom:.375rem}.py-2{padding-top:.5rem;padding-bottom:.5rem}.py-2\.5{padding-top:.625rem;padding-bottom:.625rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-3\.5{padding-top:.875rem;padding-bottom:.875rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.pb-0\.5{padding-bottom:.125rem}.pt-0\.5{padding-top:.125rem}.pt-3{padding-top:.75rem}.text-center{text-align:center}.font-display{font-family:Space Grotesk,system-ui,sans-serif}.font-mono{font-family:IBM Plex Mono,ui-monospace,monospace}.font-serif{font-family:"Source Serif 4",Georgia,serif}.text-\[10\.5px\]{font-size:10.5px}.text-\[10px\]{font-size:10px}.text-\[11\.5px\]{font-size:11.5px}.text-\[11px\]{font-size:11px}.text-\[12\.5px\]{font-size:12.5px}.text-\[12px\]{font-size:12px}.text-\[13\.5px\]{font-size:13.5px}.text-\[13px\]{font-size:13px}.text-\[14px\]{font-size:14px}.text-\[15px\]{font-size:15px}.text-\[17px\]{font-size:17px}.text-\[19px\]{font-size:19px}.font-bold{font-weight:700}.font-semibold{font-weight:600}.italic{font-style:italic}.leading-\[1\.65\]{line-height:1.65}.leading-relaxed{line-height:1.625}.leading-snug{line-height:1.375}.tracking-\[0\.14em\]{letter-spacing:.14em}.tracking-\[0\.22em\]{letter-spacing:.22em}.tracking-tight{letter-spacing:-.025em}.text-ink-300{--tw-text-opacity:1;color:rgb(183 191 201/var(--tw-text-opacity))}.text-ink-400{--tw-text-opacity:1;color:rgb(90 102 117/var(--tw-text-opacity))}.text-ink-500{--tw-text-opacity:1;color:rgb(60 71 87/var(--tw-text-opacity))}.text-ink-600{--tw-text-opacity:1;color:rgb(42 51 64/var(--tw-text-opacity))}.text-ink-700{--tw-text-opacity:1;color:rgb(29 36 46/var(--tw-text-opacity))}.text-rust{--tw-text-opacity:1;color:rgb(216 84 60/var(--tw-text-opacity))}.text-signal-deep{--tw-text-opacity:1;color:rgb(165 121 28/var(--tw-text-opacity))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139/var(--tw-text-opacity))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105/var(--tw-text-opacity))}.text-teal-deep{--tw-text-opacity:1;color:rgb(46 112 110/var(--tw-text-opacity))}.accent-signal{accent-color:#e8b33c}.shadow-xl{--tw-shadow:0 20px 25px -5px rgba(0,0,0,.1),0 8px 10px -6px rgba(0,0,0,.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color),0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.outline-none{outline:2px solid transparent;outline-offset:2px}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,-webkit-backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter;transition-property:color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter,-webkit-backdrop-filter;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.scroll-thin::-webkit-scrollbar{width:9px;height:9px}.scroll-thin::-webkit-scrollbar-thumb{border-radius:9999px;--tw-bg-opacity:1;background-color:rgb(216 221 228/var(--tw-bg-opacity))}.scroll-thin:is(.dark *)::-webkit-scrollbar-thumb{--tw-bg-opacity:1;background-color:rgb(42 51 64/var(--tw-bg-opacity))}.scroll-thin::-webkit-scrollbar-track{background:transparent}.placeholder\:text-ink-300::-moz-placeholder{--tw-text-opacity:1;color:rgb(183 191 201/var(--tw-text-opacity))}.placeholder\:text-ink-300::placeholder{--tw-text-opacity:1;color:rgb(183 191 201/var(--tw-text-opacity))}.last\:border-0:last-child{border-width:0}.hover\:text-signal-deep:hover{--tw-text-opacity:1;color:rgb(165 121 28/var(--tw-text-opacity))}.dark\:border-ink-500:is(.dark *){--tw-border-opacity:1;border-color:rgb(60 71 87/var(--tw-border-opacity))}.dark\:border-ink-600:is(.dark *){--tw-border-opacity:1;border-color:rgb(42 51 64/var(--tw-border-opacity))}.dark\:border-teal\/30:is(.dark *){border-color:rgba(79,168,165,.3)}.dark\:bg-ink-600:is(.dark *){--tw-bg-opacity:1;background-color:rgb(42 51 64/var(--tw-bg-opacity))}.dark\:bg-ink-900\/85:is(.dark *){background-color:rgba(14,18,24,.85)}.dark\:bg-teal\/10:is(.dark *){background-color:rgba(79,168,165,.1)}.dark\:text-ink-500:is(.dark *){--tw-text-opacity:1;color:rgb(60 71 87/var(--tw-text-opacity))}.dark\:text-paper\/70:is(.dark *){color:hsla(42,38%,95%,.7)}.dark\:text-paper\/80:is(.dark *){color:hsla(42,38%,95%,.8)}.dark\:text-signal:is(.dark *){--tw-text-opacity:1;color:rgb(232 179 60/var(--tw-text-opacity))}.dark\:text-slate2:is(.dark *){--tw-text-opacity:1;color:rgb(138 148 163/var(--tw-text-opacity))}.dark\:text-teal:is(.dark *){--tw-text-opacity:1;color:rgb(79 168 165/var(--tw-text-opacity))}.dark\:placeholder\:text-ink-500:is(.dark *)::-moz-placeholder{--tw-text-opacity:1;color:rgb(60 71 87/var(--tw-text-opacity))}.dark\:placeholder\:text-ink-500:is(.dark *)::placeholder{--tw-text-opacity:1;color:rgb(60 71 87/var(--tw-text-opacity))}.dark\:hover\:text-signal:hover:is(.dark *){--tw-text-opacity:1;color:rgb(232 179 60/var(--tw-text-opacity))}@media (min-width:640px){.sm\:block{display:block}.sm\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.sm\:p-8{padding:2rem}}@media (min-width:1024px){.lg\:grid-cols-\[minmax\(0\2c 44fr\)_minmax\(0\2c 56fr\)\]{grid-template-columns:minmax(0,44fr) minmax(0,56fr)}}
+</style>
+</head>
+
+<body class="bg-paper text-ink-900 dark:bg-ink-900 dark:text-paper font-display antialiased transition-colors duration-150">
+
+<!-- ══════════════════════════ HEADER ══════════════════════════ -->
+<header class="h-14 flex items-center gap-4 px-4 border-b surface-deep edge shrink-0">
+  <div class="flex items-baseline gap-2.5">
+    <span class="font-mono text-[11px] tracking-[0.22em] text-signal-deep dark:text-signal">EXAM</span>
+    <span class="font-display font-bold text-[17px] tracking-tight">Bench</span>
+  </div>
+  <div class="h-5 w-px bg-paper-edge dark:bg-ink-600"></div>
+  <div id="stats" class="font-mono text-[11px] text-slate-500 dark:text-slate2 hidden sm:block">no questions yet</div>
+
+  <div class="ml-auto flex items-center gap-2">
+    <button id="btn-theme" class="btn-icon" title="Toggle light/dark" aria-label="Toggle theme">
+      <svg id="icon-sun" class="w-4 h-4 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+        <circle cx="12" cy="12" r="4"></circle>
+        <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>
+      </svg>
+      <svg id="icon-moon" class="w-4 h-4 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.8A9 9 0 1111.2 3 7 7 0 0021 12.8z"></path>
+      </svg>
+    </button>
+    <button id="btn-sample" class="btn-ghost">Load sample</button>
+    <button id="btn-scoring" class="btn-neutral">Scoring</button>
+    <button id="btn-versions" class="btn-neutral">Versions</button>
+    <button id="btn-export" class="btn-primary">Export</button>
+  </div>
+</header>
+
+<!-- ══════════════════════════ MAIN ══════════════════════════ -->
+<main class="grid lg:grid-cols-[minmax(0,44fr)_minmax(0,56fr)] h-[calc(100vh-3.5rem)]">
+
+  <!-- LEFT: source -->
+  <section class="flex flex-col min-h-0 border-r edge surface-sunk">
+    <div class="flex items-center gap-3 px-4 h-9 border-b edge-soft shrink-0">
+      <span class="pane-label">SOURCE · AMC-TXT</span>
+      <span id="save-state" class="ml-auto font-mono text-[10px] text-ink-300 dark:text-ink-500">—</span>
+      <button id="btn-help" class="font-mono text-[10px] text-slate-500 dark:text-slate2 hover:text-signal-deep dark:hover:text-signal transition">syntax ?</button>
+    </div>
+
+    <div id="help" class="hidden px-4 py-3 border-b edge-soft surface-deep text-[12px] leading-relaxed text-slate-600 dark:text-slate2 font-mono">
+      <div class="text-ink-900 dark:text-paper mb-1.5">Question</div>
+<pre class="text-[11.5px] whitespace-pre-wrap">*[id=nav-01]{b=2,m=-0.5} Question text here
++ correct choice
+- wrong choice
+- another wrong choice</pre>
+      <div class="text-ink-900 dark:text-paper mt-3 mb-1.5">Pieces</div>
+      <ul class="space-y-1 text-[11.5px]">
+        <li><span class="text-signal-deep dark:text-signal">*</span> starts a question · <span class="text-signal-deep dark:text-signal">+</span> correct · <span class="text-signal-deep dark:text-signal">-</span> wrong</li>
+        <li><span class="text-signal-deep dark:text-signal">[id=…]</span> optional tag, reused as the ZipGrade tag</li>
+        <li><span class="text-signal-deep dark:text-signal">{b=2,m=-0.5}</span> points for correct (b) and penalty for wrong (m)</li>
+        <li><span class="text-signal-deep dark:text-signal">#</span> comment · <span class="text-signal-deep dark:text-signal">Title:</span> metadata, above the first question</li>
+        <li>Unprefixed lines continue the line above</li>
+      </ul>
+      <div class="text-ink-900 dark:text-paper mt-3 mb-1.5">Group</div>
+<pre class="text-[11.5px] whitespace-pre-wrap">*( Intro text shown once before the group.
+* First question in the group?
++ correct
+- wrong
+* Second question in the group?
++ correct
+- wrong
+*) Optional closing text after the group.</pre>
+      <ul class="space-y-1 text-[11.5px] mt-1.5">
+        <li><span class="text-signal-deep dark:text-signal">*(</span> opens a group · <span class="text-signal-deep dark:text-signal">*)</span> closes it — every group must be closed</li>
+        <li>Groups always stay together when shuffled; the Versions panel lets you choose whether groups reorder relative to each other and whether questions inside a group reorder too</li>
+      </ul>
+    </div>
+
+    <textarea id="editor" spellcheck="false"
+      class="flex-1 min-h-0 w-full resize-none bg-transparent font-mono text-[13px] leading-[1.65] px-4 py-4 outline-none scroll-thin placeholder:text-ink-300 dark:placeholder:text-ink-500"
+      placeholder="Title: Cyber Warfare — Mid-term&#10;&#10;*{b=2,m=-0.5} Which layer terminates a TLS session?&#10;+ Presentation&#10;- Network&#10;- Data link"></textarea>
+
+    <div id="problems" class="shrink-0 max-h-40 overflow-auto scroll-thin border-t edge-soft"></div>
+  </section>
+
+  <!-- RIGHT: preview -->
+  <section class="flex flex-col min-h-0 surface">
+    <div class="flex items-center gap-3 px-5 h-9 border-b edge-soft surface-deep shrink-0">
+      <span class="pane-label">PAPER · PREVIEW</span>
+      <span id="preview-meta" class="ml-auto font-mono text-[10px] text-slate-500 dark:text-slate2"></span>
+    </div>
+    <div id="preview" class="flex-1 min-h-0 overflow-auto scroll-thin px-5 py-6 space-y-5"></div>
+  </section>
+</main>
+
+<!-- ══════════════════════════ VERSIONS MODAL ══════════════════════════ -->
+<div id="modal" class="hidden fixed inset-0 z-40 bg-ink-900/70 dark:bg-ink-900/85 backdrop-blur-sm p-4 sm:p-8 overflow-auto">
+  <div class="modal-box">
+    <div class="flex items-center gap-3 px-5 h-12 border-b edge">
+      <span class="font-display font-bold text-[15px]">Versions</span>
+      <span id="ver-sub" class="font-mono text-[11px] text-slate-500 dark:text-slate2"></span>
+      <button id="btn-close" class="btn-icon ml-auto" aria-label="Close">✕</button>
+    </div>
+
+    <div class="p-5 space-y-5">
+      <div class="grid sm:grid-cols-3 gap-4">
+        <label class="block">
+          <span class="field-label">HOW MANY</span>
+          <input id="in-count" type="number" min="1" max="12" value="3" class="field-input mt-1.5">
+        </label>
+        <label class="block">
+          <span class="field-label">SHUFFLE SEED</span>
+          <input id="in-seed" type="text" value="1" class="field-input mt-1.5">
+        </label>
+        <div class="flex flex-col justify-end gap-2 pb-0.5">
+          <label class="toggle-row"><input id="in-shuffle-q" type="checkbox" checked class="accent-signal w-3.5 h-3.5"> shuffle questions &amp; groups</label>
+          <label class="toggle-row"><input id="in-shuffle-g" type="checkbox" checked class="accent-signal w-3.5 h-3.5"> shuffle within groups</label>
+          <label class="toggle-row"><input id="in-shuffle-c" type="checkbox" checked class="accent-signal w-3.5 h-3.5"> shuffle choices</label>
+        </div>
+      </div>
+      <p class="font-mono text-[10.5px] text-slate-500 dark:text-slate2">"Shuffle questions &amp; groups" reorders standalone questions and whole groups relative to each other — a group always stays together. "Shuffle within groups" additionally reorders the questions inside each group.</p>
+
+      <div class="flex items-center gap-3 flex-wrap">
+        <button id="btn-generate" class="btn-primary">Generate</button>
+        <span class="font-mono text-[11px] text-slate-500 dark:text-slate2">Same seed always rebuilds the same versions.</span>
+      </div>
+
+      <div id="ver-out" class="space-y-3"></div>
+
+      <div>
+        <div class="field-label mb-2">ODT TEMPLATE</div>
+        <div id="tpl-status" class="font-mono text-[11px] text-slate-500 dark:text-slate2 mb-2"></div>
+        <div id="tpl-list" class="flex flex-col border edge rounded-lg overflow-hidden"></div>
+        <label role="button" class="mini-btn mt-2.5 inline-flex items-center gap-1.5">
+          upload custom .odt
+          <input id="tpl-upload" type="file" accept=".odt,application/vnd.oasis.opendocument.text" class="hidden">
+        </label>
+      </div>
+
+      <div>
+        <div class="field-label mb-2">FILES</div>
+        <div id="file-out" class="flex flex-col border edge rounded-lg overflow-hidden"></div>
+        <p class="font-mono text-[11px] text-slate-500 dark:text-slate2 mt-3">Export downloads all of these as one .zip. If your browser blocks it, grab them one at a time here.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="scoring-modal" class="hidden fixed inset-0 z-40 bg-ink-900/70 dark:bg-ink-900/85 backdrop-blur-sm p-4 sm:p-8 overflow-auto">
+  <div class="modal-box max-w-xl">
+    <div class="flex items-center gap-3 px-5 h-12 border-b edge">
+      <span class="font-display font-bold text-[15px]">Scoring</span>
+      <span id="scoring-note" class="font-mono text-[11px] text-slate-500 dark:text-slate2"></span>
+      <button id="btn-scoring-close" class="btn-icon ml-auto" aria-label="Close">✕</button>
+    </div>
+    <div class="p-5 space-y-6">
+
+      <section class="space-y-2.5">
+        <span class="field-label">SCORE — ALL QUESTIONS</span>
+        <div class="flex items-end gap-2.5 flex-wrap">
+          <label class="block">
+            <span class="field-label">POINTS</span>
+            <input id="score-value" type="number" step="0.25" value="1" class="field-input mt-1.5 w-24">
+          </label>
+          <button id="btn-score-apply" class="btn-primary">Apply to all</button>
+        </div>
+      </section>
+
+      <div class="edge border-t"></div>
+
+      <section class="space-y-2.5">
+        <span class="field-label">PENALTY — ALL QUESTIONS</span>
+        <div class="grid grid-cols-3 gap-2">
+          <button class="btn-neutral" data-penalty-pct="0">0</button>
+          <button class="btn-neutral" data-penalty-pct="0.25">25% of score</button>
+          <button class="btn-neutral" data-penalty-pct="0.5">50% of score</button>
+        </div>
+        <div class="flex items-end gap-2.5 flex-wrap">
+          <label class="block">
+            <span class="field-label">CUSTOM</span>
+            <input id="penalty-value" type="number" step="0.25" value="0" class="field-input mt-1.5 w-24">
+          </label>
+          <button id="btn-penalty-apply" class="btn-neutral">Apply fixed</button>
+        </div>
+      </section>
+
+      <div class="edge border-t"></div>
+
+      <section class="space-y-2.5">
+        <span class="field-label">NORMALIZE TOTAL</span>
+        <div class="grid grid-cols-2 gap-2">
+          <button class="btn-neutral" data-normalize="20">20 pts total</button>
+          <button class="btn-neutral" data-normalize="100">100 pts total</button>
+        </div>
+        <div class="flex items-end gap-2.5 flex-wrap">
+          <label class="block">
+            <span class="field-label">CUSTOM TOTAL</span>
+            <input id="normalize-value" type="number" step="0.5" value="20" class="field-input mt-1.5 w-24">
+          </label>
+          <button id="btn-normalize-apply" class="btn-primary">Normalize</button>
+        </div>
+        <p class="font-mono text-[11px] text-slate-500 dark:text-slate2">Scales every score proportionally so all questions add up to the target.</p>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="hidden fixed bottom-5 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-lg border shadow-xl font-mono text-[12px] surface border-paper-edge dark:border-ink-500"></div>
+
+<script>
+/* ════════════════════════════════════════════════════════════════════
+   1. AMCParser — AMC-TXT subset → question objects
+   ════════════════════════════════════════════════════════════════════ */
+const AMCParser = (() => {
+  const MAX_CHOICES = 5;                       // ZipGrade standard forms go A–E
+  const META_RE   = /^([A-Za-z][A-Za-z0-9_-]*)\s*:\s*(.*)$/;
+  const START_RE  = /^\s*(\*{1,2})(\[[^\]]*\])?(\{[^}]*\})?\s*(.*)$/;
+  const CHOICE_RE = /^\s*([+-])(\[[^\]]*\])?(\{[^}]*\})?\s*(.*)$/;
+  const GROUP_START_RE = /^\s*\*\(\s*(\[[^\]]*\])?\s*(.*)$/;
+  const GROUP_END_RE   = /^\s*\*\)\s*(.*)$/;
+
+  const parseBraces = s => {                   // "{b=2,m=-0.5}" | "{2}"
+    const out = {};
+    if (!s) return out;
+    s.slice(1, -1).split(',').map(x => x.trim()).filter(Boolean).forEach(pair => {
+      const [k, v] = pair.split('=').map(x => (x || '').trim());
+      if (v === undefined) out.b = Number(k);
+      else out[k] = Number(v);
+    });
+    return out;
+  };
+
+  const parseBrackets = s => {                 // "[id=nav-01]"
+    const out = {};
+    if (!s) return out;
+    s.slice(1, -1).split(',').map(x => x.trim()).filter(Boolean).forEach(pair => {
+      const [k, v] = pair.split('=').map(x => (x || '').trim());
+      out[k] = v === undefined ? true : v;
+    });
+    return out;
+  };
+
+  function parse(text) {
+    const lines = (text || '').split(/\r?\n/);
+    const meta = {}, questions = [], problems = [];
+    const groupsMap = new Map();                 // id -> group
+    const blockTokens = [];                      // top-level order: {type:'q',q} | {type:'group',id}
+    let q = null, currentGroup = null, target = null, groupCounter = 0;
+
+    const push = () => { if (q) questions.push(q); q = null; target = null; };
+
+    lines.forEach((raw, i) => {
+      const line = raw.replace(/\s+$/, ''), no = i + 1;
+
+      if (/^\s*#/.test(line)) return;
+      if (!line.trim()) { target = null; return; }
+
+      const s = line.trimStart();
+
+      if (s.startsWith('*(')) {
+        push();
+        if (currentGroup) {
+          problems.push({ line: no, level: 'error', msg: 'Nested groups are not supported — close the previous group with *) first.' });
+          return;
+        }
+        const m = line.match(GROUP_START_RE);
+        const opts = parseBrackets(m[1]);
+        groupCounter++;
+        currentGroup = { line: no, id: opts.id || opts.name || `g${groupCounter}`, intro: (m[2] || '').trim(), outro: '', questions: [] };
+        groupsMap.set(currentGroup.id, currentGroup);
+        blockTokens.push({ type: 'group', id: currentGroup.id });
+        target = { kind: 'gintro' };
+        return;
+      }
+
+      if (s.startsWith('*)')) {
+        push();
+        if (!currentGroup) { problems.push({ line: no, level: 'error', msg: '*) found with no matching *( to close.' }); return; }
+        const m = line.match(GROUP_END_RE);
+        currentGroup.outro = (m[1] || '').trim();
+        target = { kind: 'goutro' };
+        currentGroup = null;
+        return;
+      }
+
+      if (s.startsWith('*')) {
+        push();
+        const [, stars, br, sc, rest] = line.match(START_RE);
+        if (stars === '**') problems.push({ line: no, level: 'warn',
+          msg: 'Multiple-answer question — only single-answer is supported, treated as single.' });
+        const opts = parseBrackets(br), score = parseBraces(sc);
+        q = {
+          line: no,
+          id: opts.id || opts.name || null,
+          groupId: currentGroup ? currentGroup.id : null,
+          points: Number.isFinite(score.b) ? score.b : 1,
+          penalty: Number.isFinite(score.m) ? score.m : 0,
+          text: rest.trim(),
+          choices: []
+        };
+        if (!currentGroup) blockTokens.push({ type: 'q', q });
+        target = { kind: 'q' };
+        return;
+      }
+
+      if (/^[+-]/.test(s)) {
+        if (!q) { problems.push({ line: no, level: 'error', msg: 'Choice before any question.' }); return; }
+        const [, sign, br, sc, rest] = line.match(CHOICE_RE);
+        q.choices.push({ correct: sign === '+', text: rest.trim(), opts: parseBrackets(br), score: parseBraces(sc) });
+        target = { kind: 'c', idx: q.choices.length - 1 };
+        return;
+      }
+
+      const m = !q && !currentGroup && line.match(META_RE);
+      if (m) { meta[m[1]] = m[2].trim(); return; }
+
+      if (target && target.kind === 'q')      { q.text += ' ' + s; return; }
+      if (target && target.kind === 'c')      { q.choices[target.idx].text += ' ' + s; return; }
+      if (target && target.kind === 'gintro' && currentGroup) { currentGroup.intro += ' ' + s; return; }
+      if (target && target.kind === 'goutro') {                 // group just closed; find it via groupsMap by last id
+        const last = blockTokens.filter(t => t.type === 'group').pop();
+        if (last) groupsMap.get(last.id).outro += ' ' + s;
+        return;
+      }
+      problems.push({ line: no, level: 'error', msg: 'Stray text — start a question with * first.' });
+    });
+    push();
+    if (currentGroup) problems.push({ line: currentGroup.line, level: 'error', msg: `Group '${currentGroup.id}' was never closed with *).` });
+
+    // attach each question to its group, in document order
+    questions.forEach(qq => { if (qq.groupId && groupsMap.has(qq.groupId)) groupsMap.get(qq.groupId).questions.push(qq); });
+    groupsMap.forEach(g => { if (!g.questions.length) problems.push({ line: g.line, level: 'warn', msg: `Group '${g.id}' has no questions.` }); });
+
+    questions.forEach((qq, idx) => {
+      const n = idx + 1;
+      const nCorrect = qq.choices.filter(c => c.correct).length;
+      if (!qq.choices.length)   problems.push({ line: qq.line, level: 'error', msg: `Q${n} has no choices.` });
+      else if (nCorrect === 0)  problems.push({ line: qq.line, level: 'error', msg: `Q${n} has no correct choice (+).` });
+      else if (nCorrect > 1)    problems.push({ line: qq.line, level: 'error', msg: `Q${n} has ${nCorrect} correct choices — single-answer only.` });
+      if (qq.choices.length > MAX_CHOICES)
+        problems.push({ line: qq.line, level: 'error', msg: `Q${n} has ${qq.choices.length} choices — ZipGrade standard forms hold ${MAX_CHOICES}.` });
+      if (!qq.text)             problems.push({ line: qq.line, level: 'warn', msg: `Q${n} has no question text.` });
+      qq.number = n;
+      qq.valid  = qq.choices.length > 0 && nCorrect === 1 && qq.choices.length <= MAX_CHOICES;
+    });
+
+    const blocks = blockTokens.map(t => t.type === 'group' ? { type: 'group', group: groupsMap.get(t.id) } : { type: 'q', q: t.q });
+
+    return { meta, questions, problems, blocks, groups: [...groupsMap.values()], ok: !problems.some(p => p.level === 'error') };
+  }
+
+  return { parse, MAX_CHOICES, START_RE };
+})();
+
+
+/* ════════════════════════════════════════════════════════════════════
+   2. Store — IndexedDB persistence
+   ════════════════════════════════════════════════════════════════════ */
+const Store = (() => {
+  const DB = 'exam-bench', STORE = 'state', KEY = 'current', VERSION = 1;
+  let dbp = null;
+
+  const open = () => dbp || (dbp = new Promise((res, rej) => {
+    const r = indexedDB.open(DB, VERSION);
+    r.onupgradeneeded = () => r.result.createObjectStore(STORE);
+    r.onsuccess = () => res(r.result);
+    r.onerror   = () => rej(r.error);
+  }));
+
+  const tx = async (mode, fn) => {
+    const db = await open();
+    return new Promise((res, rej) => {
+      const t = db.transaction(STORE, mode);
+      const req = fn(t.objectStore(STORE));
+      req.onsuccess = () => res(req.result);
+      req.onerror   = () => rej(req.error);
+    });
+  };
+
+  return {
+    load: ()      => tx('readonly',  s => s.get(KEY)),
+    save: (state) => tx('readwrite', s => s.put(state, KEY))
+  };
+})();
+
+
+/* ════════════════════════════════════════════════════════════════════
+   3. Rand — seeded, reproducible shuffling
+   ════════════════════════════════════════════════════════════════════ */
+const Rand = (() => {
+  const hash = str => {                        // string → 32-bit seed
+    let h = 2166136261;
+    for (const ch of String(str)) { h ^= ch.charCodeAt(0); h = Math.imul(h, 16777619); }
+    return h >>> 0;
+  };
+  const mulberry32 = a => () => {
+    a |= 0; a = a + 0x6D2B79F5 | 0;
+    let t = Math.imul(a ^ a >>> 15, 1 | a);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+  const shuffled = (arr, rng) => {             // Fisher–Yates on a copy
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(rng() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  };
+  return { hash, mulberry32, shuffled };
+})();
+
+
+/* ════════════════════════════════════════════════════════════════════
+   4. Versions — build shuffled variants of a question set
+   ════════════════════════════════════════════════════════════════════ */
+const Versions = (() => {
+  const LETTERS = 'ABCDEFGHIJKL'.split('');
+
+  /* Drop invalid questions; drop groups left with none. */
+  function prepareBlocks(blocks) {
+    return blocks
+      .map(b => {
+        if (b.type === 'q') return b.q.valid ? b : null;
+        const qs = b.group.questions.filter(q => q.valid);
+        return qs.length ? { type: 'group', group: { ...b.group, questions: qs } } : null;
+      })
+      .filter(Boolean);
+  }
+
+  const makeItem = (q, n, choices) => ({
+    number: n, source: q, text: q.text, id: q.id,
+    points: q.points, penalty: q.penalty, choices,
+    answerLetter: LETTERS[choices.findIndex(c => c.correct)]
+  });
+
+  /* shuffleQuestions  — reorders the top-level blocks (standalone questions
+                          and whole groups) relative to each other. A group
+                          always travels together as one unit either way —
+                          this is the "shuffle between groups" toggle.
+     shuffleWithinGroups — additionally reorders the questions inside each
+                            group. Off keeps each group's internal sequence
+                            exactly as authored.                             */
+  function build(blocks, { count = 3, seed = '1', shuffleQuestions = true, shuffleWithinGroups = true, shuffleChoices = true } = {}) {
+    const prepared = prepareBlocks(blocks);
+    return LETTERS.slice(0, count).map((letter, v) => {
+      const rng = Rand.mulberry32(Rand.hash(`${seed}::${letter}::${v}`));
+      const order = shuffleQuestions ? Rand.shuffled(prepared, rng) : prepared.slice();
+      const items = [];
+      let n = 0;
+      order.forEach(block => {
+        const inner = block.type === 'q' ? [block.q]
+          : (shuffleWithinGroups ? Rand.shuffled(block.group.questions, rng) : block.group.questions.slice());
+        inner.forEach(q => {
+          n++;
+          const choices = shuffleChoices ? Rand.shuffled(q.choices, rng) : q.choices.slice();
+          items.push(makeItem(q, n, choices));
+        });
+      });
+      return { letter, items };
+    });
+  }
+
+  return { build, LETTERS };
+})();
+
+
+/* ════════════════════════════════════════════════════════════════════
+   4b. ScoreOps — batch-edit scores/penalties directly in the source text
+   Source text stays the single source of truth: these rewrite the
+   {b=…,m=…} braces on each question's start line, nothing else.
+   ════════════════════════════════════════════════════════════════════ */
+const ScoreOps = (() => {
+  const fmt = n => {
+    const r = Math.round(n * 10000) / 10000;
+    return Object.is(r, -0) ? '0' : String(r);
+  };
+
+  function rewriteLine(line, b, m) {
+    const match = line.match(AMCParser.START_RE);
+    if (!match) return line;
+    const [, stars, br, , rest] = match;
+    const parts = [`b=${fmt(b)}`];
+    if (m) parts.push(`m=${fmt(m)}`);
+    return `${stars}${br || ''}{${parts.join(',')}} ${rest}`;
+  }
+
+  /* Apply computeFn(question) -> {b, m} to every question's source line. */
+  function transform(text, questions, computeFn) {
+    if (!questions.length) return text;
+    const lines = text.split(/\r?\n/);
+    questions.forEach(q => {
+      const idx = q.line - 1;
+      if (idx < 0 || idx >= lines.length) return;
+      const { b, m } = computeFn(q);
+      lines[idx] = rewriteLine(lines[idx], b, m);
+    });
+    return lines.join('\n');
+  }
+
+  const setScore = (text, questions, value) =>
+    transform(text, questions, q => ({ b: value, m: q.penalty }));
+
+  const setPenaltyFixed = (text, questions, value) =>
+    transform(text, questions, q => ({ b: q.points, m: value }));
+
+  const setPenaltyPct = (text, questions, pct) =>
+    transform(text, questions, q => ({ b: q.points, m: q.points * pct }));
+
+  const normalizeToSum = (text, questions, target) => {
+    const sum = questions.reduce((s, q) => s + q.points, 0);
+    if (!sum) return text;
+    const factor = target / sum;
+    return transform(text, questions, q => ({ b: q.points * factor, m: q.penalty }));
+  };
+
+  return { setScore, setPenaltyFixed, setPenaltyPct, normalizeToSum };
+})();
+
+
+/* ════════════════════════════════════════════════════════════════════
+   5. Exporters — ZipGrade CSV + per-version JSON
+   ════════════════════════════════════════════════════════════════════ */
+const Exporters = (() => {
+  const csvField = v => {
+    const s = String(v ?? '');
+    return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+  };
+  const num = n => (Number.isInteger(n) ? String(n) : String(Number(n.toFixed(4))));
+
+  /* ZipGrade answer-key CSV.
+     Columns: Key, Question Number, Response/Mapping, Point Value, Tags
+     A penalty becomes an extra row whose response is the literal [a&i]
+     — ZipGrade's "attempted but incorrect" point value.                */
+  function zipgradeCsv(versions) {
+    const rows = [['Key', 'Question', 'Response/Mapping', 'Points', 'Tags']];
+    versions.forEach(v => v.items.forEach(it => {
+      rows.push([v.letter, it.number, it.answerLetter, num(it.points), it.id || '']);
+      if (it.penalty) rows.push([v.letter, it.number, '[a&i]', num(it.penalty), '']);
+    }));
+    return rows.map(r => r.map(csvField).join(',')).join('\r\n') + '\r\n';
+  }
+
+  /* Plain per-version data object, passed straight into odf-kit's
+     fillTemplate() — matches templates/README.md's {#mcq}…{/mcq} /
+     {#options}…{/options} placeholder convention:
+     { version, mcq: [{ question_number, question_text, question_score,
+                         question_penalty, options: [{option_number, option_text}] }] } */
+  function versionData(version) {
+    const mcq = version.items.map(it => ({
+      question_number: it.number,
+      question_text: it.text,
+      question_score: it.points,
+      question_penalty: it.penalty,
+      options: it.choices.map((c, i) => ({
+        option_number: i + 1,
+        option_text: c.text
+      }))
+    }));
+    return { version: version.letter, mcq };
+  }
+
+  const keyTable = version => ([
+    '| # | Answer | Points | Penalty | Tag |',
+    '|---|--------|--------|---------|-----|',
+    ...version.items.map(it =>
+      `| ${it.number} | ${it.answerLetter} | ${num(it.points)} | ${it.penalty ? num(it.penalty) : '—'} | ${it.id || '—'} |`)
+  ]);
+
+  /* One combined key document for the instructor (Markdown, kept — this
+     one is for humans, not for pandoc-per-version conversion). */
+  function keysMarkdown(versions, meta) {
+    const yq = s => String(s).replace(/"/g, '\\"');
+    const out = [
+      '---', `title: "${yq(meta.Title || 'Exam')} — Answer keys"`,
+      'geometry: margin=2cm', 'papersize: a4', '---', ''
+    ];
+    versions.forEach(v => {
+      out.push(`## Version ${v.letter}`, '', ...keyTable(v), '');
+    });
+    return out.join('\n');
+  }
+
+  return { zipgradeCsv, versionData, keysMarkdown, num };
+})();
+
+
+/* ════════════════════════════════════════════════════════════════════
+   5b. Templates — default ODT templates fetched from GitHub, plus a
+   lazy loader for odf-kit. Laziness rules: the list of names is cheap
+   text and is cached indefinitely once fetched; the (potentially large)
+   .odt bytes are only fetched when a template is actually selected or
+   explicitly downloaded, and the "selected" cache holds only the one
+   template currently in use — switching selection evicts it.
+   ════════════════════════════════════════════════════════════════════ */
+const Templates = (() => {
+  const BASE = 'https://raw.githubusercontent.com/diogo-aos/ExamBench/main/templates/';
+  let namesPromise = null;          // list.txt names — cached forever once it succeeds
+  let selectedCache = null;         // { name, bytes } | null — single slot, evicted on selection change
+  let fillTemplateFnPromise = null; // odf-kit's fillTemplate — cached forever once it succeeds
+
+  const tplSourceError = msg => Object.assign(new Error(msg), { kind: 'template-source' });
+  const odfKitError = err => Object.assign(new Error(err.message || String(err)), { kind: 'odf-kit' });
+
+  async function listNames() {
+    if (!namesPromise) {
+      namesPromise = fetch(BASE + 'list.txt')
+        .then(r => { if (!r.ok) throw tplSourceError(`HTTP ${r.status}`); return r.text(); })
+        .then(t => t.split(/\r?\n/).map(s => s.trim()).filter(Boolean))
+        .catch(err => { namesPromise = null; throw err; }); // don't poison cache — allow retry
+    }
+    return namesPromise;
+  }
+
+  async function fetchBytes(name) {
+    const r = await fetch(BASE + encodeURIComponent(name));
+    if (!r.ok) throw tplSourceError(`HTTP ${r.status} fetching ${name}`);
+    return new Uint8Array(await r.arrayBuffer());
+  }
+
+  /* Used when a default template becomes the active selection. */
+  async function selectBytes(name) {
+    if (selectedCache && selectedCache.name === name) return selectedCache.bytes;
+    const bytes = await fetchBytes(name);
+    selectedCache = { name, bytes };
+    return bytes;
+  }
+
+  /* Called whenever the active selection moves away from a default
+     template (to another default, to a custom upload, or is cleared). */
+  function evictSelected() { selectedCache = null; }
+
+  /* Independent "download this listed template" action — reuses the
+     selected-cache opportunistically but never retains an ephemeral fetch. */
+  async function downloadBytes(name) {
+    if (selectedCache && selectedCache.name === name) return selectedCache.bytes;
+    return fetchBytes(name);
+  }
+
+  async function loadFillTemplate() {
+    if (!fillTemplateFnPromise) {
+      fillTemplateFnPromise = import('https://esm.sh/odf-kit@latest')
+        .then(mod => mod.fillTemplate)
+        .catch(err => { fillTemplateFnPromise = null; throw odfKitError(err); });
+    }
+    return fillTemplateFnPromise;
+  }
+
+  return { listNames, selectBytes, evictSelected, downloadBytes, loadFillTemplate };
+})();
+
+
+/* ════════════════════════════════════════════════════════════════════
+   6. Zip — minimal stored-mode ZIP writer (no dependencies)
+   Browsers cancel back-to-back downloads, so everything ships as one
+   archive instead of one click per file.
+   ════════════════════════════════════════════════════════════════════ */
+const Zip = (() => {
+  const TABLE = (() => {
+    const t = new Uint32Array(256);
+    for (let i = 0; i < 256; i++) {
+      let c = i;
+      for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1;
+      t[i] = c >>> 0;
+    }
+    return t;
+  })();
+  const crc32 = buf => {
+    let c = 0xFFFFFFFF;
+    for (let i = 0; i < buf.length; i++) c = TABLE[(c ^ buf[i]) & 0xFF] ^ (c >>> 8);
+    return (c ^ 0xFFFFFFFF) >>> 0;
+  };
+  const dosTime = d => ((d.getHours() << 11) | (d.getMinutes() << 5) | (d.getSeconds() >> 1)) & 0xFFFF;
+  const dosDate = d => (((d.getFullYear() - 1980) << 9) | ((d.getMonth() + 1) << 5) | d.getDate()) & 0xFFFF;
+
+  function build(files) {
+    const enc = new TextEncoder(), now = new Date();
+    const time = dosTime(now), date = dosDate(now);
+    const parts = [], central = [];
+    let offset = 0;
+
+    files.forEach(f => {
+      const name = enc.encode(f.name);
+      const data = f.bytes instanceof Uint8Array ? f.bytes : enc.encode(f.text || '');
+      const crc = crc32(data);
+
+      const lh = new DataView(new ArrayBuffer(30));
+      lh.setUint32(0, 0x04034b50, true);
+      lh.setUint16(4, 20, true);
+      lh.setUint16(6, 0x0800, true);
+      lh.setUint16(8, 0, true);
+      lh.setUint16(10, time, true); lh.setUint16(12, date, true);
+      lh.setUint32(14, crc, true);
+      lh.setUint32(18, data.length, true); lh.setUint32(22, data.length, true);
+      lh.setUint16(26, name.length, true); lh.setUint16(28, 0, true);
+      parts.push(new Uint8Array(lh.buffer), name, data);
+
+      const ch = new DataView(new ArrayBuffer(46));
+      ch.setUint32(0, 0x02014b50, true);
+      ch.setUint16(4, 20, true); ch.setUint16(6, 20, true);
+      ch.setUint16(8, 0x0800, true); ch.setUint16(10, 0, true);
+      ch.setUint16(12, time, true); ch.setUint16(14, date, true);
+      ch.setUint32(16, crc, true);
+      ch.setUint32(20, data.length, true); ch.setUint32(24, data.length, true);
+      ch.setUint16(28, name.length, true);
+      ch.setUint32(42, offset, true);
+      central.push(new Uint8Array(ch.buffer), name);
+
+      offset += 30 + name.length + data.length;
+    });
+
+    const cdSize = central.reduce((s, a) => s + a.length, 0);
+    const eo = new DataView(new ArrayBuffer(22));
+    eo.setUint32(0, 0x06054b50, true);
+    eo.setUint16(8, files.length, true); eo.setUint16(10, files.length, true);
+    eo.setUint32(12, cdSize, true); eo.setUint32(16, offset, true);
+
+    return new Blob([...parts, ...central, new Uint8Array(eo.buffer)], { type: 'application/zip' });
+  }
+
+  return { build };
+})();
+
+
+/* ════════════════════════════════════════════════════════════════════
+   7. Download — browser file delivery, with a blocked-download fallback
+   ════════════════════════════════════════════════════════════════════ */
+const Download = (() => {
+  const blob = (name, b) => {
+    const url = URL.createObjectURL(b);
+    const a = Object.assign(document.createElement('a'), { href: url, download: name, rel: 'noopener' });
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 8000);
+  };
+  const text = (name, s, mime = 'text/plain;charset=utf-8') => blob(name, new Blob([s], { type: mime }));
+  const openTab = (s, mime = 'text/plain;charset=utf-8') => {
+    const url = URL.createObjectURL(new Blob([s], { type: mime }));
+    window.open(url, '_blank');
+    setTimeout(() => URL.revokeObjectURL(url), 30000);
+  };
+  const copy = async s => {
+    try { await navigator.clipboard.writeText(s); return true; }
+    catch {
+      const ta = Object.assign(document.createElement('textarea'), { value: s });
+      ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      const ok = document.execCommand('copy'); ta.remove(); return ok;
+    }
+  };
+  return { blob, text, openTab, copy };
+})();
+
+
+/* ════════════════════════════════════════════════════════════════════
+   8. Theme — light/dark toggle, persisted
+   ════════════════════════════════════════════════════════════════════ */
+const Theme = (() => {
+  const root = document.documentElement;
+  const sun = document.getElementById('icon-sun');
+  const moon = document.getElementById('icon-moon');
+
+  const isDark = () => root.classList.contains('dark');
+
+  function sync() {
+    sun.classList.toggle('hidden', !isDark());   // dark mode → show sun (switch-to-light)
+    moon.classList.toggle('hidden', isDark());   // light mode → show moon (switch-to-dark)
+  }
+
+  function set(dark) {
+    root.classList.toggle('dark', dark);
+    try { localStorage.setItem('exam-bench-theme', dark ? 'dark' : 'light'); } catch {}
+    sync();
+  }
+
+  function toggle() { set(!isDark()); }
+
+  return { sync, toggle };
+})();
+
+
+/* ════════════════════════════════════════════════════════════════════
+   9. Preview — render the parsed bank on the paper pane
+   ════════════════════════════════════════════════════════════════════ */
+const Preview = (() => {
+  const el = document.getElementById('preview');
+  const metaEl = document.getElementById('preview-meta');
+  const L = Versions.LETTERS;
+  const esc = s => String(s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+
+  function empty() {
+    el.innerHTML = `
+      <div class="h-full grid place-items-center text-center px-8">
+        <div class="max-w-xs">
+          <div class="mx-auto w-11 h-11 rounded-full border-2 border-dashed border-ink-200 dark:border-ink-600 grid place-items-center mb-4">
+            <span class="font-mono text-[13px] text-ink-300 dark:text-ink-500">*</span>
+          </div>
+          <p class="font-serif text-[15px] text-ink-700 dark:text-paper/80 leading-relaxed">Write your first question on the left.</p>
+          <p class="font-mono text-[11px] text-ink-400 dark:text-ink-500 mt-2.5">Start the line with <b>*</b>, then list choices with <b>+</b> and <b>-</b>.</p>
+        </div>
+      </div>`;
+    metaEl.textContent = '';
+  }
+
+  function render(parsed) {
+    const qs = parsed.questions;
+    if (!qs.length) return empty();
+
+    const total = qs.filter(q => q.valid).reduce((s, q) => s + q.points, 0);
+    const groupCount = parsed.groups.length;
+    metaEl.textContent = `${qs.length} q${groupCount ? ` · ${groupCount} group${groupCount === 1 ? '' : 's'}` : ''} · ${Exporters.num(total)} pts`;
+
+    const header = parsed.meta.Title ? `
+      <div>
+        <h1 class="font-display font-bold text-[19px] tracking-tight">${esc(parsed.meta.Title)}</h1>
+        ${parsed.meta.Presentation ? `<p class="font-serif text-[13.5px] text-ink-500 dark:text-slate2 mt-1 leading-snug">${esc(parsed.meta.Presentation)}</p>` : ''}
+        <div class="rule mt-3"></div>
+      </div>` : '';
+
+    const body = parsed.blocks.map(b => b.type === 'q' ? card(b.q) : groupBox(b.group)).join('');
+    el.innerHTML = header + body;
+  }
+
+  function groupBox(g) {
+    return `
+      <section class="rounded-xl border-2 border-teal/40 dark:border-teal/30 bg-teal/5 dark:bg-teal/10 p-4 space-y-3">
+        <div class="flex items-center gap-2">
+          <span class="font-mono text-[10px] px-1.5 py-0.5 rounded bg-teal/20 text-teal-deep font-semibold tracking-[0.14em]">GROUP</span>
+          <span class="font-mono text-[10px] text-ink-400 dark:text-slate2">${esc(g.id)}</span>
+        </div>
+        ${g.intro ? `<p class="font-serif text-[13.5px] italic text-ink-700 dark:text-paper/80 leading-snug">${esc(g.intro)}</p>` : ''}
+        <div class="space-y-3">${g.questions.map(card).join('') || '<p class="font-mono text-[11px] text-rust">empty group</p>'}</div>
+        ${g.outro ? `<p class="font-serif text-[12.5px] italic text-ink-500 dark:text-slate2 leading-snug border-t edge-soft pt-3">${esc(g.outro)}</p>` : ''}
+      </section>`;
+  }
+
+  function card(q) {
+    const bad = !q.valid;
+
+    const gutter = q.choices.map((c, i) =>
+      `<div class="bubble ${c.correct && !bad ? 'bubble-on' : ''}">${L[i] || '?'}</div>`).join('');
+
+    const choices = q.choices.map((c, i) => `
+      <li class="flex gap-2.5 items-baseline">
+        <span class="font-mono text-[11px] w-4 shrink-0 ${c.correct ? 'text-signal-deep dark:text-signal font-semibold' : 'text-ink-400 dark:text-slate2'}">${L[i] || '?'}</span>
+        <span class="font-serif text-[14px] leading-snug ${c.correct ? 'font-semibold' : 'text-ink-600 dark:text-paper/70'}">${esc(c.text) || '<em class="text-rust not-italic">empty choice</em>'}</span>
+      </li>`).join('');
+
+    const score = q.penalty
+      ? `${Exporters.num(q.points)} pt · ${Exporters.num(q.penalty)} if wrong`
+      : `${Exporters.num(q.points)} pt`;
+
+    return `
+      <article class="qcard ${bad ? 'qcard-bad' : ''}">
+        <div class="flex items-center gap-2.5 px-4 h-8 border-b edge-soft surface-deep/60">
+          <span class="font-mono text-[11px] font-semibold">${String(q.number).padStart(2, '0')}</span>
+          ${q.id ? `<span class="font-mono text-[10px] px-1.5 py-0.5 rounded bg-teal/15 text-teal-deep">${esc(q.id)}</span>` : ''}
+          <span class="ml-auto font-mono text-[10px] text-slate-500 dark:text-slate2">${score}</span>
+        </div>
+        <div class="flex gap-4 px-4 py-3.5">
+          <div class="flex flex-col gap-1.5 pt-0.5 shrink-0">${gutter}</div>
+          <div class="min-w-0 flex-1">
+            <p class="font-serif text-[15px] leading-snug mb-2.5">${esc(q.text) || '<em class="text-rust not-italic">no question text</em>'}</p>
+            <ul class="space-y-1.5">${choices}</ul>
+          </div>
+        </div>
+      </article>`;
+  }
+
+  return { render, empty };
+})();
+
+
+/* ════════════════════════════════════════════════════════════════════
+   10. Problems — inline diagnostics under the editor
+   ════════════════════════════════════════════════════════════════════ */
+const Problems = (() => {
+  const el = document.getElementById('problems');
+  return {
+    render(list) {
+      el.innerHTML = list.map(p => `
+        <div class="flex gap-2.5 items-baseline px-4 py-1.5 border-b edge-soft last:border-0">
+          <span class="font-mono text-[10px] shrink-0 ${p.level === 'error' ? 'text-rust' : 'text-signal-deep dark:text-signal'}">L${p.line}</span>
+          <span class="font-mono text-[11px] text-slate-600 dark:text-slate2 leading-snug">${p.msg}</span>
+        </div>`).join('');
+    }
+  };
+})();
+
+
+/* ════════════════════════════════════════════════════════════════════
+   11. App — wiring
+   ════════════════════════════════════════════════════════════════════ */
+const App = (() => {
+  const $ = id => document.getElementById(id);
+  const editor = $('editor');
+
+  let parsed = { meta: {}, questions: [], problems: [], ok: true };
+  let versions = [];
+  let saveTimer = null;
+
+  // ODT template selection: {kind:'none'} | {kind:'default', name} | {kind:'custom', name, bytes}
+  let tplSelection = { kind: 'none' };
+  let pendingTemplateName = null;   // restored from Store, applied once list.txt names are known
+  let lastKnownTplNames = [];
+  let odtBuildToken = 0;            // race guard for overlapping async fill runs
+
+  const escHtml = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+  const SAMPLE = `# Exam Bench — sample bank
+Title: Cyber Warfare — Mid-term
+Presentation: 15 questions, 90 minutes, no materials.
+Author: CIAFA
+
+*[id=osi-01]{b=2,m=-0.5} At which OSI layer does a TLS session terminate?
++ Presentation
+- Network
+- Data link
+- Physical
+
+*[id=recon-02]{b=1} Which technique gathers information without touching the target?
++ Passive reconnaissance
+- Port scanning
+- Banner grabbing
+- Vulnerability scanning
+
+*[id=crypto-03]{b=3,m=-1} A cipher whose security relies on a shared secret is called
++ symmetric
+- asymmetric
+- homomorphic
+- post-quantum
+
+*( Questions about the Enigma machine.
+*{b=1} What kind of cipher device was the Enigma?
++ Electromechanical rotor cipher
+- Digital block cipher
+- One-time pad generator
+*{b=1} Who led the British effort to break Enigma at Bletchley Park?
++ Alan Turing
+- Winston Churchill
+- Claude Shannon
+*) End of Enigma questions.
+`;
+
+  const toast = (msg, ms = 2400) => {
+    const t = $('toast');
+    t.textContent = msg;
+    t.classList.remove('hidden');
+    clearTimeout(t._h);
+    t._h = setTimeout(() => t.classList.add('hidden'), ms);
+  };
+
+  function refresh() {
+    parsed = AMCParser.parse(editor.value);
+    Preview.render(parsed);
+    Problems.render(parsed.problems);
+    const ready = parsed.questions.filter(q => q.valid);
+    const pts = ready.reduce((s, q) => s + q.points, 0);
+    $('stats').textContent = parsed.questions.length
+      ? `${ready.length}/${parsed.questions.length} ready · ${Exporters.num(pts)} pts`
+      : 'no questions yet';
+  }
+
+  const readSettings = () => ({
+    count: Math.max(1, Math.min(12, Number($('in-count').value) || 3)),
+    seed: $('in-seed').value || '1',
+    shuffleQuestions: $('in-shuffle-q').checked,
+    shuffleWithinGroups: $('in-shuffle-g').checked,
+    shuffleChoices: $('in-shuffle-c').checked,
+    templateName: tplSelection.kind === 'default' ? tplSelection.name : null
+  });
+
+  function scheduleSave() {
+    $('save-state').textContent = 'saving…';
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(async () => {
+      try {
+        await Store.save({ source: editor.value, settings: readSettings(), savedAt: Date.now() });
+        $('save-state').textContent = 'saved';
+      } catch { $('save-state').textContent = 'save failed'; }
+    }, 500);
+  }
+
+  function applyScoring(newText) {
+    if (newText === editor.value) return;
+    editor.value = newText;
+    refresh();
+    scheduleSave();
+    versions = [];               // stale — scores changed underneath them
+    renderVersions();
+  }
+
+  function scoringNote() {
+    const qs = parsed.questions;
+    const sum = qs.reduce((s, q) => s + q.points, 0);
+    $('scoring-note').textContent = qs.length ? `${qs.length} questions · ${Exporters.num(sum)} pts now` : 'no questions yet';
+  }
+
+  function generate() {
+    const ready = parsed.questions.filter(q => q.valid);
+    if (!ready.length) { toast('Nothing to shuffle — fix the questions first.'); versions = []; renderVersions(); return; }
+    versions = Versions.build(parsed.blocks, readSettings());
+    renderVersions();
+    scheduleSave();
+  }
+
+  function renderVersions() {
+    const out = $('ver-out');
+    $('ver-sub').textContent = versions.length
+      ? `${versions.length} built · ${versions[0].items.length} questions each` : '';
+    out.innerHTML = versions.map(v => `
+      <div class="rounded-lg border edge surface-sunk overflow-hidden">
+        <div class="flex items-center gap-3 px-4 h-9 border-b edge-soft">
+          <span class="font-display font-bold text-[13px]">Version ${v.letter}</span>
+          <span class="ml-auto font-mono text-[10.5px] text-slate-500 dark:text-slate2">${v.items.length} q · ${Exporters.num(v.items.reduce((s, i) => s + i.points, 0))} pts</span>
+        </div>
+        <div class="px-4 py-3 flex flex-wrap gap-1.5">
+          ${v.items.map(it => chipFor(it)).join('')}
+        </div>
+      </div>`).join('');
+    renderFiles();
+  }
+
+  function chipFor(it) {
+    const seg = (content, extra = '') => `<span class="${extra}">${content}</span>`;
+    const div = '<span class="w-px self-stretch bg-paper-edge dark:bg-ink-600"></span>';
+    const parts = [];
+    if (it.source.groupId) parts.push(seg(it.source.groupId, 'text-teal-deep dark:text-teal'));
+    parts.push(seg(`Q${it.source.number}`));
+    parts.push(seg(it.answerLetter, 'text-signal-deep dark:text-signal font-semibold'));
+    return `<span class="chip inline-flex items-center gap-1.5">${parts.join(div)}</span>`;
+  }
+
+  const slug = () => (parsed.meta.Title || 'exam').toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'exam';
+
+  /* ── ODT template selection ─────────────────────────────────────── */
+
+  /* Single source of truth for "what bytes do we fill with" — works
+     even if the picker UI was never opened (e.g. Export clicked
+     directly), lazily resolving the default selection on first use. */
+  async function resolveTemplateBytes() {
+    if (tplSelection.kind === 'custom') return tplSelection.bytes;
+    if (tplSelection.kind === 'default') return Templates.selectBytes(tplSelection.name);
+    const names = await Templates.listNames();
+    if (!names.length) throw Object.assign(new Error('No templates available'), { kind: 'template-source' });
+    const name = (pendingTemplateName && names.includes(pendingTemplateName)) ? pendingTemplateName : names[0];
+    tplSelection = { kind: 'default', name };
+    lastKnownTplNames = names;
+    paintTemplateList();
+    return Templates.selectBytes(name);
+  }
+
+  async function renderTemplatePicker() {
+    $('tpl-status').textContent = 'loading template list…';
+    try {
+      const names = await Templates.listNames();
+      lastKnownTplNames = names;
+      $('tpl-status').textContent = '';
+      if (tplSelection.kind === 'none' && names.length) {
+        const name = (pendingTemplateName && names.includes(pendingTemplateName)) ? pendingTemplateName : names[0];
+        tplSelection = { kind: 'default', name };
+      }
+      paintTemplateList();
+    } catch (err) {
+      $('tpl-status').textContent = `Only uploaded ODT templates are available right now — GitHub templates couldn't be reached (${err.message || err}).`;
+      $('tpl-list').innerHTML = '';
+    }
+  }
+
+  function paintTemplateList() {
+    const rows = lastKnownTplNames.map(name => {
+      const checked = tplSelection.kind === 'default' && tplSelection.name === name ? 'checked' : '';
+      return `
+      <div class="flex items-center gap-3 px-3 h-9 border-b edge-soft last:border-0 surface-sunk">
+        <label class="toggle-row flex-1 min-w-0">
+          <input type="radio" name="tpl-choice" value="${escHtml(name)}" class="accent-signal" ${checked}>
+          <span class="font-mono text-[11.5px] truncate">${escHtml(name)}</span>
+        </label>
+        <button class="mini-btn" data-act="download-tpl" data-name="${escHtml(name)}">download</button>
+      </div>`;
+    });
+    if (tplSelection.kind === 'custom') {
+      rows.push(`
+      <div class="flex items-center gap-3 px-3 h-9 border-b edge-soft last:border-0 surface-sunk">
+        <label class="toggle-row flex-1 min-w-0">
+          <input type="radio" name="tpl-choice" value="__custom__" checked class="accent-signal">
+          <span class="font-mono text-[11.5px] truncate">${escHtml(tplSelection.name)} (custom)</span>
+        </label>
+        <button class="mini-btn" data-act="clear-custom">clear</button>
+      </div>`);
+    }
+    $('tpl-list').innerHTML = rows.join('');
+  }
+
+  function selectDefaultTemplate(name) {
+    if (tplSelection.kind === 'default' && tplSelection.name === name) return;
+    Templates.evictSelected();
+    tplSelection = { kind: 'default', name };
+    paintTemplateList();
+    scheduleSave();
+    renderFiles();
+  }
+
+  async function handleCustomUpload(file) {
+    if (!file) return;
+    const bytes = new Uint8Array(await file.arrayBuffer());
+    Templates.evictSelected();
+    tplSelection = { kind: 'custom', name: file.name, bytes };
+    $('tpl-upload').value = '';
+    paintTemplateList();
+    scheduleSave();
+    renderFiles();
+  }
+
+  function clearCustomTemplate() {
+    Templates.evictSelected();
+    tplSelection = { kind: 'none' };
+    renderTemplatePicker();
+    renderFiles();
+  }
+
+  async function downloadTemplate(name) {
+    toast(`Fetching ${name}…`, 6000);
+    try {
+      const bytes = await Templates.downloadBytes(name);
+      Download.blob(name, new Blob([bytes], { type: 'application/vnd.oasis.opendocument.text' }));
+    } catch (err) {
+      toast(`Couldn't download ${name}: ${err.message || err}`, 4000);
+    }
+  }
+
+  /* ── Files ───────────────────────────────────────────────────────── */
+
+  /* CSV + Markdown key — never depend on the template, always instant. */
+  function buildStaticFiles() {
+    if (!versions.length) return [];
+    const s = slug();
+    return [
+      { name: `${s}-zipgrade-keys.csv`, mime: 'text/csv;charset=utf-8',
+        text: Exporters.zipgradeCsv(versions) },
+      { name: `${s}-answer-keys.md`, mime: 'text/markdown;charset=utf-8',
+        text: Exporters.keysMarkdown(versions, parsed.meta) }
+    ];
+  }
+
+  /* All-or-nothing: a single version failing to fill means the template
+     doesn't match the data shape, not a per-version fluke — abort the
+     whole batch on the first failure rather than shipping a partial set. */
+  async function fillAllVersions(templateBytes, fillTemplate) {
+    const s = slug();
+    const out = [];
+    for (const v of versions) {
+      let bytes;
+      try {
+        bytes = fillTemplate(templateBytes, Exporters.versionData(v));
+      } catch (err) {
+        throw new Error(`Failed to fill version ${v.letter}: ${err.message || err}`);
+      }
+      out.push({ name: `${s}-version-${v.letter}.odt`, mime: 'application/vnd.oasis.opendocument.text', bytes });
+    }
+    return out;
+  }
+
+  function paintFileRows(staticFiles, odtState) {
+    const out = $('file-out');
+    const staticRows = staticFiles.map((f, i) => `
+      <div class="flex items-center gap-3 px-3 h-9 border-b edge-soft last:border-0 surface-sunk">
+        <span class="font-mono text-[11.5px] truncate">${f.name}</span>
+        <span class="font-mono text-[10px] text-ink-400 dark:text-ink-500 ml-auto shrink-0">${(new Blob([f.text]).size / 1024).toFixed(1)} kB</span>
+        <button class="mini-btn" data-static-act="save" data-i="${i}">save</button>
+        <button class="mini-btn" data-static-act="view" data-i="${i}">view</button>
+        <button class="mini-btn" data-static-act="copy" data-i="${i}">copy</button>
+      </div>`);
+
+    let odtRows;
+    if (odtState.status === 'pending') {
+      odtRows = [`<div class="flex items-center px-3 h-9 border-b edge-soft last:border-0 surface-sunk">
+        <span class="font-mono text-[11.5px] text-ink-400 dark:text-ink-500">filling ODT versions…</span>
+      </div>`];
+    } else if (odtState.status === 'error') {
+      odtRows = [`<div class="flex items-center px-3 py-2 border-b edge-soft last:border-0 surface-sunk">
+        <span class="font-mono text-[11px] text-rust">${escHtml(odtState.message)}</span>
+      </div>`];
+    } else {
+      odtRows = (odtState.files || []).map((f, i) => `
+        <div class="flex items-center gap-3 px-3 h-9 border-b edge-soft last:border-0 surface-sunk">
+          <span class="font-mono text-[11.5px] truncate">${f.name}</span>
+          <span class="font-mono text-[10px] text-ink-400 dark:text-ink-500 ml-auto shrink-0">${(f.bytes.length / 1024).toFixed(1)} kB</span>
+          <button class="mini-btn" data-odt-act="save" data-i="${i}">save</button>
+        </div>`);
+    }
+
+    out.innerHTML = staticRows.join('') + odtRows.join('');
+
+    out.querySelectorAll('[data-static-act]').forEach(btn => {
+      btn.onclick = async () => {
+        const f = staticFiles[Number(btn.dataset.i)];
+        if (btn.dataset.staticAct === 'save') { Download.text(f.name, f.text, f.mime); toast(`Saved ${f.name}`); }
+        if (btn.dataset.staticAct === 'view') Download.openTab(f.text, f.mime);
+        if (btn.dataset.staticAct === 'copy') toast(await Download.copy(f.text) ? `Copied ${f.name}` : 'Copy blocked — use view instead');
+      };
+    });
+    out.querySelectorAll('[data-odt-act]').forEach(btn => {
+      btn.onclick = () => {
+        const f = odtState.files[Number(btn.dataset.i)];
+        Download.blob(f.name, new Blob([f.bytes], { type: f.mime }));
+        toast(`Saved ${f.name}`);
+      };
+    });
+  }
+
+  async function renderFiles() {
+    const token = ++odtBuildToken;
+    const staticFiles = buildStaticFiles();
+    if (!versions.length) { $('file-out').innerHTML = ''; return; }
+
+    paintFileRows(staticFiles, { status: 'pending' });
+
+    let templateBytes, fillTemplate;
+    try {
+      templateBytes = await resolveTemplateBytes();
+      fillTemplate  = await Templates.loadFillTemplate();
+    } catch (err) {
+      if (token !== odtBuildToken) return;
+      const message = err.kind === 'template-source' ? 'Only uploaded ODT templates are available right now.'
+        : err.kind === 'odf-kit' ? 'The component for rendering the final ODTs is unavailable.'
+        : (err.message || String(err));
+      paintFileRows(staticFiles, { status: 'error', message });
+      return;
+    }
+
+    try {
+      const files = await fillAllVersions(templateBytes, fillTemplate);
+      if (token !== odtBuildToken) return;
+      paintFileRows(staticFiles, { status: 'ready', files });
+    } catch (err) {
+      if (token !== odtBuildToken) return;
+      paintFileRows(staticFiles, { status: 'error', message: err.message || String(err) });
+    }
+  }
+
+  async function exportAll() {
+    if (!versions.length) generate();
+    if (!versions.length) { toast('Nothing to export — fix the questions first.'); return; }
+
+    let templateBytes;
+    try {
+      templateBytes = await resolveTemplateBytes();
+    } catch (err) {
+      $('modal').classList.remove('hidden');
+      toast(err.kind === 'template-source'
+        ? 'Only uploaded ODT templates are available right now.'
+        : `Can't export — ${err.message || err}`, 4500);
+      return;
+    }
+
+    let fillTemplate;
+    try {
+      fillTemplate = await Templates.loadFillTemplate();
+    } catch {
+      toast('The component for rendering the final ODTs is unavailable.', 4500);
+      return;
+    }
+
+    let odtFiles;
+    try {
+      odtFiles = await fillAllVersions(templateBytes, fillTemplate);
+    } catch (err) {
+      toast(err.message || String(err), 5000);
+      return;
+    }
+
+    const files = [...buildStaticFiles(), ...odtFiles];
+    try {
+      Download.blob(`${slug()}-exam-pack.zip`, Zip.build(files));
+      toast(`${files.length} files in ${slug()}-exam-pack.zip`, 3400);
+    } catch {
+      $('modal').classList.remove('hidden');
+      toast('Zip failed — save the files one by one below.', 4000);
+    }
+  }
+
+  function bind() {
+    editor.addEventListener('input', () => { refresh(); scheduleSave(); });
+
+    $('btn-theme').onclick = () => Theme.toggle();
+
+    $('btn-help').onclick = () => $('help').classList.toggle('hidden');
+    $('btn-sample').onclick = () => {
+      if (editor.value.trim() && !confirm('Replace the current bank with the sample?')) return;
+      editor.value = SAMPLE; refresh(); scheduleSave();
+    };
+
+    $('btn-versions').onclick = () => { $('modal').classList.remove('hidden'); generate(); renderTemplatePicker(); };
+    $('btn-close').onclick    = () => $('modal').classList.add('hidden');
+    $('modal').addEventListener('click', e => { if (e.target === $('modal')) $('modal').classList.add('hidden'); });
+
+    $('tpl-list').addEventListener('change', e => {
+      if (e.target.name !== 'tpl-choice' || e.target.value === '__custom__') return;
+      selectDefaultTemplate(e.target.value);
+    });
+    $('tpl-list').addEventListener('click', e => {
+      const dl = e.target.closest('[data-act="download-tpl"]');
+      if (dl) { downloadTemplate(dl.dataset.name); return; }
+      if (e.target.closest('[data-act="clear-custom"]')) clearCustomTemplate();
+    });
+    $('tpl-upload').addEventListener('change', e => handleCustomUpload(e.target.files[0]));
+
+    $('btn-scoring').onclick = () => { $('scoring-modal').classList.remove('hidden'); scoringNote(); };
+    $('btn-scoring-close').onclick = () => $('scoring-modal').classList.add('hidden');
+    $('scoring-modal').addEventListener('click', e => { if (e.target === $('scoring-modal')) $('scoring-modal').classList.add('hidden'); });
+
+    $('btn-score-apply').onclick = () => {
+      const v = Number($('score-value').value);
+      if (!isFinite(v) || v <= 0) { toast('Enter a positive score.'); return; }
+      applyScoring(ScoreOps.setScore(editor.value, parsed.questions, v));
+      scoringNote();
+      toast(`Score set to ${v} pt on every question.`);
+    };
+
+    document.querySelectorAll('[data-penalty-pct]').forEach(btn => btn.onclick = () => {
+      const pct = Number(btn.dataset.penaltyPct);
+      applyScoring(ScoreOps.setPenaltyPct(editor.value, parsed.questions, pct));
+      scoringNote();
+      toast(pct === 0 ? 'Penalty cleared on every question.' : `Penalty set to ${pct * 100}% of each score.`);
+    });
+    $('btn-penalty-apply').onclick = () => {
+      const v = Number($('penalty-value').value);
+      if (!isFinite(v)) { toast('Enter a penalty value.'); return; }
+      applyScoring(ScoreOps.setPenaltyFixed(editor.value, parsed.questions, v));
+      scoringNote();
+      toast(`Penalty set to ${v} on every question.`);
+    };
+
+    const doNormalize = target => {
+      if (!isFinite(target) || target <= 0) { toast('Enter a positive total.'); return; }
+      if (!parsed.questions.length) { toast('Nothing to normalize — add questions first.'); return; }
+      applyScoring(ScoreOps.normalizeToSum(editor.value, parsed.questions, target));
+      scoringNote();
+      toast(`Scores rescaled to total ${target} pts.`);
+    };
+    document.querySelectorAll('[data-normalize]').forEach(btn => btn.onclick = () => {
+      $('normalize-value').value = btn.dataset.normalize;
+      doNormalize(Number(btn.dataset.normalize));
+    });
+    $('btn-normalize-apply').onclick = () => doNormalize(Number($('normalize-value').value));
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { $('modal').classList.add('hidden'); $('scoring-modal').classList.add('hidden'); }
+    });
+
+    $('btn-generate').onclick = generate;
+    $('btn-export').onclick   = exportAll;
+
+    ['in-count', 'in-seed', 'in-shuffle-q', 'in-shuffle-g', 'in-shuffle-c']
+      .forEach(id => $(id).addEventListener('change', generate));
+  }
+
+  async function init() {
+    bind();
+    Theme.sync();
+    try {
+      const state = await Store.load();
+      if (state) {
+        editor.value = state.source || '';
+        const s = state.settings || {};
+        if (s.count) $('in-count').value = s.count;
+        if (s.seed)  $('in-seed').value  = s.seed;
+        if ('shuffleQuestions' in s)     $('in-shuffle-q').checked = s.shuffleQuestions;
+        if ('shuffleWithinGroups' in s)  $('in-shuffle-g').checked = s.shuffleWithinGroups;
+        if ('shuffleChoices'  in s)      $('in-shuffle-c').checked = s.shuffleChoices;
+        if (s.templateName) pendingTemplateName = s.templateName;
+        $('save-state').textContent = 'restored';
+      }
+    } catch { $('save-state').textContent = 'storage off'; }
+    refresh();
+  }
+
+  return { init };
+})();
+
+App.init();
+</script>
+</body>
+</html>
