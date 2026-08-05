@@ -234,6 +234,57 @@ symlinked files):
 `docs/templates/`** — there is no build step or symlink keeping them in
 sync automatically.
 
+## User manual
+
+The end-user manual is written in `docs/exam-bench-manual.md` — edit
+that file for any content change, never the generated HTML directly.
+`docs/exam-bench-manual.html` (served alongside the app by GitHub
+Pages) is a **generated file**: rebuild it with
+`scripts/render-manual.sh`, which runs `pandoc` against
+`scripts/manual-template.html` — content and presentation are
+deliberately separate: the template never contains manual text, and
+the markdown never contains HTML/CSS/Tailwind classes. The template
+styles itself with **Tailwind loaded from the CDN**
+(`cdn.tailwindcss.com?plugins=typography`, `darkMode: 'class'`,
+`tailwind.config` extends colors/fonts to match `docs/index.html`'s
+own palette) — no build step, utility classes are compiled in the
+browser at runtime. Pandoc's raw output (`$body$`) is unstyled
+semantic HTML with no classes of its own, so it's wrapped in a
+`prose`/`prose-invert` container (the `@tailwindcss/typography`
+plugin) rather than hand-styled per element. The theme toggle reuses
+`docs/index.html`'s exact `exam-bench-theme` localStorage key and
+pre-paint script, so a preference set on one page carries over to the
+other. The AI-prompt code block in the markdown is fenced as
+` ```{.prompt} ` specifically so the template's JS can find it
+(`pre.prompt`) and attach a "Copy" button — that's the only code block
+tagged this way, on purpose, since it's the only one meant to be
+copy-pasted wholesale.
+
+**Gotcha (already hit once, don't reintroduce it):** don't style code
+via the typography plugin's `prose-code:` modifier on the `<article>`
+wrapper. `prose-code:` targets *every* `code` element, including the
+one nested inside `<pre>` — since that nested `<code>` is `inline` and
+wraps across many visual lines, any `prose-code:` background/border
+renders as a border *around each line* rather than around the block,
+and Tailwind Typography's default `--tw-prose-pre-code` text color
+(designed for its own default dark `pre` background) can end up
+low-contrast if the `pre` background is overridden without also
+overriding that variable. Fix, if this needs touching again: leave
+`pre`/inline-`code` **background, border, and color** entirely to
+typography's own defaults (they already correctly distinguish inline
+code from code-in-`pre`) — only use `prose-code:`/`prose-pre:` for
+things that can't leak visually, like `font-mono`. Verified with
+`chromium-browser --headless --screenshot` (available in this
+environment) rather than guessing from markup — worth doing again for
+any future template/CSS change here, since there's no other way to
+actually see the rendered result in this setup.
+
+After editing the markdown, run the script and commit both the `.md`
+and the regenerated `.html` together. An older
+`docs/exam-bench-manual.odt` also exists from before the markdown
+rewrite; it's not kept in sync and can be regenerated from the
+markdown via `pandoc` if still needed, or removed.
+
 ## Conventions / notes for future changes
 - `docs/index.html` is a single self-contained HTML document — keep new
   code in that file, in the same IIFE-module style, rather than

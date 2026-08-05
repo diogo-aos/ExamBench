@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exam Bench — User Manual</title>
+
+<!-- Theme applied before paint, so there's no light->dark flash on load.
+     Shares the exam-bench-theme localStorage key with docs/index.html,
+     so a preference set on one page is respected on the other. -->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem('exam-bench-theme');
+      var dark = saved ? saved === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+      if (dark) document.documentElement.classList.add('dark');
+    } catch (e) {}
+  })();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+
+<!-- Tailwind, unbuilt — utility classes are compiled in the browser at runtime. -->
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          paper: '#f7f4ed',
+          'paper-edge': '#e6e0d3',
+          ink: { 900: '#0e1218', 800: '#151a22', 700: '#1d242e', 600: '#2a3340', 500: '#3c4757', 400: '#5a6675' },
+          signal: { DEFAULT: '#e8b33c', deep: '#a5791c' },
+          teal:   { DEFAULT: '#4fa8a5', deep: '#2e706e' },
+          rust: '#d8543c'
+        },
+        fontFamily: {
+          display: ['Space Grotesk', 'system-ui', 'sans-serif'],
+          mono: ['IBM Plex Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+          serif: ['Source Serif 4', 'Georgia', 'serif']
+        }
+      }
+    }
+  };
+</script>
+</head>
+<body class="bg-paper text-ink-900 dark:bg-ink-900 dark:text-paper font-serif antialiased transition-colors">
+<div class="max-w-3xl mx-auto px-6 py-14 sm:px-8 sm:py-20">
+
+  <div class="flex justify-end mb-4">
+    <button id="theme-toggle" type="button" aria-label="Toggle light/dark theme"
+      class="inline-grid h-8 w-8 place-items-center rounded-md text-ink-400 hover:bg-black/5 dark:text-ink-400 dark:hover:bg-white/10 transition">
+      <svg id="icon-sun" class="h-4 w-4 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+        <circle cx="12" cy="12" r="4"></circle>
+        <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>
+      </svg>
+      <svg id="icon-moon" class="h-4 w-4 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.8A9 9 0 1111.2 3 7 7 0 0021 12.8z"></path>
+      </svg>
+    </button>
+  </div>
+
+  <header class="mb-10 pb-8 border-b border-paper-edge dark:border-ink-600">
+    <div class="font-mono text-[11px] tracking-[0.22em] uppercase text-signal-deep dark:text-signal">Exam Bench</div>
+    <h1 class="font-display font-bold text-3xl sm:text-4xl tracking-tight mt-2 mb-1.5">Exam
+Bench — User Manual</h1>
+    <p class="font-serif italic text-lg text-ink-500 dark:text-ink-400 mb-1.5">From
+question bank to printable exams</p>
+    <p class="font-mono text-xs text-ink-400">CIAFA — Portuguese Air
+Force Academy</p>
+  </header>
+
+    <nav class="rounded-xl border border-paper-edge dark:border-ink-600 bg-white dark:bg-ink-800 px-6 py-5 mb-10
+              [&_ul]:list-none [&_ul]:pl-0 [&_ul_ul]:pl-4 [&_ul_ul]:mt-1 [&_li]:my-1
+              [&_a]:font-display [&_a]:no-underline [&_a]:text-ink-700 dark:[&_a]:text-ink-400
+              hover:[&_a]:text-signal-deep dark:hover:[&_a]:text-signal">
+    <p class="font-mono text-[10.5px] tracking-[0.18em] uppercase text-ink-400 mb-2">Contents</p>
+    <ul>
+    <li><a href="#overview-of-the-workflow"
+    id="toc-overview-of-the-workflow">1. Overview of the
+    workflow</a></li>
+    <li><a href="#writing-questions-amc-txt-a-subset"
+    id="toc-writing-questions-amc-txt-a-subset">2. Writing questions —
+    AMC-TXT (a subset)</a></li>
+    <li><a href="#batch-scoring-tools" id="toc-batch-scoring-tools">3.
+    Batch scoring tools</a></li>
+    <li><a href="#generating-versions" id="toc-generating-versions">4.
+    Generating versions</a></li>
+    <li><a href="#odt-templates" id="toc-odt-templates">5. ODT
+    templates</a></li>
+    <li><a href="#generating-and-downloading-your-exam-pack"
+    id="toc-generating-and-downloading-your-exam-pack">6. Generating and
+    downloading your exam pack</a></li>
+    <li><a href="#importing-the-csv-into-zipgrade"
+    id="toc-importing-the-csv-into-zipgrade">7. Importing the CSV into
+    ZipGrade</a></li>
+    <li><a href="#using-ai-to-convert-an-existing-question-bank"
+    id="toc-using-ai-to-convert-an-existing-question-bank">8. Using AI
+    to convert an existing question bank</a></li>
+    </ul>
+  </nav>
+  
+  <article class="prose prose-neutral dark:prose-invert max-w-none
+                   prose-headings:font-display prose-headings:tracking-tight
+                   prose-h2:border-t prose-h2:border-paper-edge dark:prose-h2:border-ink-600 prose-h2:pt-6 first:prose-h2:border-0 first:prose-h2:pt-0
+                   prose-h3:text-teal-deep dark:prose-h3:text-teal
+                   prose-a:text-teal-deep dark:prose-a:text-teal hover:prose-a:text-signal-deep dark:hover:prose-a:text-signal
+                   prose-code:font-mono prose-pre:font-mono
+                   prose-th:font-mono prose-th:text-xs prose-th:uppercase prose-th:tracking-wide prose-th:text-ink-400
+                   prose-blockquote:border-signal prose-blockquote:font-serif prose-blockquote:not-italic">
+    <h2 id="overview-of-the-workflow">1. Overview of the workflow</h2>
+    <p>Exam Bench takes you from a plain-text question bank all the way
+    to a set of printable, ZipGrade-ready exam versions — writing,
+    shuffling, and filling the final <code>.odt</code> documents all
+    happen <strong>in one app, in your browser</strong>. Nothing you
+    type or upload leaves your machine except the files you explicitly
+    download.</p>
+    <p>The steps, in order:</p>
+    <ol type="1">
+    <li>Write questions in the left-hand editor, using the AMC-TXT
+    subset described in Section 2.</li>
+    <li>Optionally batch-edit scores and penalties (Section 3).</li>
+    <li>Optionally group related questions together (Section 2.4).</li>
+    <li>Open <strong>Versions</strong>, choose how many versions and how
+    shuffling should behave — versions rebuild automatically as you
+    change these (Section 4).</li>
+    <li>In the same panel, pick an ODT template (a built-in one, or
+    upload your own) — Section 5.</li>
+    <li>Click <strong>Generate output docs</strong> to fill and preview
+    the ODTs, or <strong>Download all</strong> to get everything as one
+    <code>.zip</code> (Section 6).</li>
+    <li>Import the CSV from that zip into ZipGrade as the quiz’s answer
+    key (Section 7).</li>
+    </ol>
+    <h2 id="writing-questions-amc-txt-a-subset">2. Writing questions —
+    AMC-TXT (a subset)</h2>
+    <p>Exam Bench’s editor accepts a <strong>subset of AMC-TXT</strong>,
+    the plain-text question format used by Auto Multiple Choice. It is
+    not the full AMC-TXT language — only the parts needed for
+    single-answer multiple choice exams are implemented. Section 2.5
+    lists exactly what is and isn’t supported.</p>
+    <h3 id="a-basic-question">2.1 A basic question</h3>
+    <pre><code>*[id=osi-01]{b=2,m=-0.5} At which OSI layer does a TLS session terminate?
++ Presentation
+- Network
+- Data link
+- Physical</code></pre>
+    <ul>
+    <li>A line starting with <code>*</code> begins a new question.</li>
+    <li>A line starting with <code>+</code> is the single correct
+    choice.</li>
+    <li>A line starting with <code>-</code> is a wrong choice.</li>
+    <li>A question needs at least one choice, exactly one
+    <code>+</code>, and at most five choices total (ZipGrade’s standard
+    bubble sheet holds A–E).</li>
+    <li>A line that starts with none of <code>* + -</code> and isn’t
+    blank continues the text above it — useful for wrapping long
+    question or choice text across lines.</li>
+    </ul>
+    <h3 id="optional-tags-and-scoring">2.2 Optional tags and
+    scoring</h3>
+    <p>Right after the <code>*</code>, two optional bracketed groups may
+    appear, in this order:</p>
+    <pre><code>*[id=nav-01]{b=2,m=-0.5} Question text</code></pre>
+    <ul>
+    <li><code>[id=...]</code> — a short identifier, reused as the
+    question’s tag in the ZipGrade CSV. If omitted, the question has no
+    tag.</li>
+    <li><code>{b=2,m=-0.5}</code> — scoring: <code>b</code> is the
+    points awarded for a correct answer (default <code>1</code> if
+    omitted), <code>m</code> is the points <em>lost</em> for a wrong
+    answer (default <code>0</code>). <code>{2}</code> alone is shorthand
+    for <code>{b=2}</code>.</li>
+    </ul>
+    <h3 id="metadata">2.3 Metadata</h3>
+    <p>A small set of <code>Key: value</code> lines, placed before the
+    first question, sets document metadata:</p>
+    <pre><code>Title: Cyber Warfare — Mid-term
+Presentation: 15 questions, 90 minutes, no materials.
+Author: CIAFA</code></pre>
+    <p><code>Title</code> and <code>Presentation</code> appear at the
+    top of the question preview. Any other key is accepted and stored
+    but not currently displayed.</p>
+    <h3 id="question-groups">2.4 Question groups</h3>
+    <p>Related questions can be wrapped in a group, which keeps them
+    together — with shared introductory and closing text — through
+    shuffling, preview, and printing:</p>
+    <pre><code>*( Questions about the Enigma machine.
+* What kind of cipher device was the Enigma?
++ Electromechanical rotor cipher
+- Digital block cipher
+- One-time pad generator
+* Who led the British effort to break Enigma at Bletchley Park?
++ Alan Turing
+- Winston Churchill
+- Claude Shannon
+*) End of Enigma questions.</code></pre>
+    <ul>
+    <li><code>*(</code> opens a group; any text after it is the group’s
+    introduction.</li>
+    <li><code>*)</code> closes it; any text after it is the group’s
+    closing note (optional — the line can simply be
+    <code>*)</code>).</li>
+    <li>Every group must be closed. An unclosed group, or a stray
+    <code>*)</code>, is flagged as an error in the Problems panel.</li>
+    <li>Groups cannot be nested.</li>
+    <li>A group can optionally carry its own <code>[id=...]</code>, e.g.
+    <code>*([id=enigma] Intro text</code>. If omitted, it’s
+    auto-numbered <code>g1</code>, <code>g2</code>, …</li>
+    </ul>
+    <h3 id="what-this-subset-supports-and-what-it-doesnt">2.5 What this
+    subset supports — and what it doesn’t</h3>
+    <p><strong>Supports:</strong></p>
+    <table>
+    <thead>
+    <tr class="header">
+    <th>Feature</th>
+    <th>Syntax</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="odd">
+    <td>Single-answer multiple choice</td>
+    <td><code>*</code> question, <code>+</code>/<code>-</code>
+    choices</td>
+    </tr>
+    <tr class="even">
+    <td>Up to 5 choices per question</td>
+    <td>(ZipGrade standard sheet limit)</td>
+    </tr>
+    <tr class="odd">
+    <td>Per-question score and penalty</td>
+    <td><code>{b=…,m=…}</code></td>
+    </tr>
+    <tr class="even">
+    <td>Question tags</td>
+    <td><code>[id=…]</code></td>
+    </tr>
+    <tr class="odd">
+    <td>Question groups with intro/outro text</td>
+    <td><code>*( … *)</code></td>
+    </tr>
+    <tr class="even">
+    <td>Document title and free-form metadata</td>
+    <td><code>Key: value</code> lines</td>
+    </tr>
+    <tr class="odd">
+    <td>Line continuation</td>
+    <td>any unprefixed, non-blank line</td>
+    </tr>
+    <tr class="even">
+    <td>Comments</td>
+    <td>lines starting with <code>#</code></td>
+    </tr>
+    </tbody>
+    </table>
+    <p><strong>Does <em>not</em> support</strong> (full AMC-TXT and AMC
+    itself have all of these; Exam Bench does not):</p>
+    <ul>
+    <li>Multiple-correct-answer questions (AMC-TXT’s <code>**</code>) —
+    Exam Bench detects <code>**</code> and treats it as a warning,
+    grading it as single-answer.</li>
+    <li>Open-ended / free-text questions.</li>
+    <li>LaTeX math or any LaTeX commands.</li>
+    <li>Images or other embedded media.</li>
+    <li>Nested groups.</li>
+    <li>AMC’s box/answer-sheet layout directives, page-layout commands,
+    or scoring-strategy declarations beyond per-question
+    <code>b</code>/<code>m</code>.</li>
+    <li>Alternate answer keys / multiple correct-answer mappings for the
+    same question.</li>
+    </ul>
+    <p>If a bank uses any of the unsupported features, simplify it to
+    plain single-answer questions before pasting it in — see Section 8
+    for using an AI assistant to help with that conversion.</p>
+    <h2 id="batch-scoring-tools">3. Batch scoring tools</h2>
+    <p>Open the <strong>Scoring</strong> panel to edit every question’s
+    score or penalty at once, without hand-editing each line:</p>
+    <ul>
+    <li><strong>Score — all questions</strong>: sets every question’s
+    <code>b</code> to one value.</li>
+    <li><strong>Penalty — all questions</strong>: three one-click
+    presets (<code>0</code>, <code>25% of score</code>,
+    <code>50% of score</code>, each computed from that question’s
+    <em>current</em> score) plus a custom fixed value.</li>
+    <li><strong>Normalize total</strong>: rescales every score
+    proportionally so the whole bank sums to a target (quick buttons for
+    20 and 100, or a custom value).</li>
+    </ul>
+    <p>All three tools rewrite the <code>{b=…,m=…}</code> braces
+    directly in the source text — the text stays the single source of
+    truth, and the result is visible immediately in the editor. Applying
+    any of them clears any already-generated versions, since their
+    scores would otherwise be stale; reopening <strong>Versions</strong>
+    rebuilds them automatically.</p>
+    <h2 id="generating-versions">4. Generating versions</h2>
+    <p>Open <strong>Versions</strong> to build shuffled variants of the
+    bank (default: 3, lettered A, B, C). Versions rebuild the moment you
+    open the panel or change any of these settings — there’s no separate
+    “Generate” button to remember to click.</p>
+    <table>
+    <colgroup>
+    <col style="width: 50%" />
+    <col style="width: 50%" />
+    </colgroup>
+    <thead>
+    <tr class="header">
+    <th>Setting</th>
+    <th>Effect</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="odd">
+    <td>How many</td>
+    <td>Number of versions to generate (A, B, C, …)</td>
+    </tr>
+    <tr class="even">
+    <td>Shuffle seed</td>
+    <td>Same seed always rebuilds identical versions — change it to get
+    a different shuffle</td>
+    </tr>
+    <tr class="odd">
+    <td>Shuffle questions &amp; groups</td>
+    <td>Reorders standalone questions and whole groups relative to each
+    other. A group always stays together and in one contiguous block —
+    this is the “shuffle between groups” control</td>
+    </tr>
+    <tr class="even">
+    <td>Shuffle within groups</td>
+    <td>Separately controls whether the questions <em>inside</em> each
+    group get reordered. Off keeps each group’s internal sequence
+    exactly as written</td>
+    </tr>
+    <tr class="odd">
+    <td>Shuffle choices</td>
+    <td>Reorders each question’s answer choices independently per
+    version</td>
+    </tr>
+    </tbody>
+    </table>
+    <p>Each version’s card shows every question as a small chip,
+    e.g. <strong>g1 · Q3 · A</strong> — the group id (if any), the
+    question’s number in the original bank, and the correct answer
+    letter for that version — so you can sanity-check the shuffle
+    without a full question dump.</p>
+    <p>This is deliberately the <em>cheap</em> part: rebuilding versions
+    and their preview never fetches a template or fills any documents —
+    that only happens when you ask for it (Section 6).</p>
+    <h2 id="odt-templates">5. ODT templates</h2>
+    <p>Below the version cards, the <strong>ODT TEMPLATE</strong>
+    section is where you pick what the final printable documents look
+    like.</p>
+    <h3 id="built-in-templates">5.1 Built-in templates</h3>
+    <p>Exam Bench ships with a small set of default templates (currently
+    <code>01_generic.odt</code> and
+    <code>02_AFA_IAFS_CyberWarfare_Test.odt</code>), listed in order
+    with the first one pre-selected. Each has its own
+    <strong>download</strong> button if you just want a copy of the raw
+    template file (e.g. to edit it in LibreOffice and re-upload your own
+    version).</p>
+    <h3 id="uploading-your-own-template">5.2 Uploading your own
+    template</h3>
+    <p>Click <strong>upload custom .odt(s)</strong> to add one or more
+    of your own templates — you can select multiple files at once. Each
+    upload:</p>
+    <ul>
+    <li>appears in the list marked <strong>(custom)</strong>, and stays
+    there even after you switch to a different template — switching
+    selection never removes an uploaded template, only an explicit
+    <strong>remove</strong> click does;</li>
+    <li>is saved in your browser’s local storage (IndexedDB), so it
+    <strong>survives a page refresh</strong> — you don’t need to
+    re-upload it next time;</li>
+    <li>is never sent anywhere; it’s read directly by your browser and
+    only ever leaves your machine if you download a file that used
+    it.</li>
+    </ul>
+    <p>Only one template is <em>selected</em> (the one that gets filled)
+    at a time — pick it with the radio button next to its name.</p>
+    <h3 id="template-placeholder-format">5.3 Template placeholder
+    format</h3>
+    <p>A template is a normal <code>.odt</code> file (built in
+    LibreOffice Writer) with placeholders that Exam Bench fills in per
+    version:</p>
+    <pre><code>Test — Version {version}
+
+Questions
+{#mcq}
+Q {question_number} [{question_score} val., -{question_penalty} pen.].  {question_text}
+{#options}
+    {option_number}. {option_text}
+{/options}
+--------------------------------------------------------------------
+{/mcq}</code></pre>
+    <ul>
+    <li><code>{#mcq}…{/mcq}</code> is a repeating block — it’s
+    duplicated once per question in that version, with
+    <code>{question_number}</code>, <code>{question_text}</code>,
+    <code>{question_score}</code>, and <code>{question_penalty}</code>
+    filled in for each.</li>
+    <li><code>{#options}…{/options}</code>, nested inside
+    <code>{#mcq}</code>, repeats once per answer choice, filling
+    <code>{option_number}</code> and <code>{option_text}</code>.</li>
+    <li><code>{version}</code> outside those blocks is replaced with the
+    version letter (A, B, C, …).</li>
+    </ul>
+    <p>Two things worth knowing before designing your own template:</p>
+    <ul>
+    <li><strong>No correct-answer flag.</strong> The data filled into
+    the template deliberately does not mark which option is correct —
+    that only lives in the CSV (Section 7), so a printed exam can never
+    accidentally leak the answer key.</li>
+    <li><strong>No group information yet.</strong> A group’s shared
+    intro/outro text, and which questions belong to it, aren’t currently
+    passed into the template fill — each question is filled
+    independently. If your template needs a group’s introductory text
+    printed once above its questions, that isn’t automated yet.</li>
+    </ul>
+    <h3 id="if-the-default-templates-arent-reachable">5.4 If the default
+    templates aren’t reachable</h3>
+    <p>The built-in templates are fetched from this app’s own GitHub
+    repository. If that fails (offline, GitHub unreachable), the panel
+    tells you only uploaded templates are available — upload one and
+    pick it, and everything else works exactly the same.</p>
+    <h2 id="generating-and-downloading-your-exam-pack">6. Generating and
+    downloading your exam pack</h2>
+    <p>Filling ODT templates is the one genuinely expensive step in Exam
+    Bench — it only happens when you explicitly ask for it, via one of
+    two buttons next to <strong>FILES</strong>:</p>
+    <ul>
+    <li><strong>Generate output docs</strong> — fills every version
+    against the currently selected template and lists the results right
+    there in the panel, each with its own <strong>save</strong> button.
+    Useful for previewing or grabbing files one at a time if your
+    browser blocks multi-file downloads.</li>
+    <li><strong>Download all</strong> — does the same fill (if it hasn’t
+    already run for the current versions/template), then bundles
+    everything into one <code>&lt;slug&gt;-exam-pack.zip</code>
+    containing:
+    <ul>
+    <li><code>&lt;slug&gt;-zipgrade-keys.csv</code> — the answer key for
+    <strong>every</strong> version, in ZipGrade’s import format (Section
+    7).</li>
+    <li><code>&lt;slug&gt;-version-A.odt</code>, <code>-B.odt</code>, …
+    — one filled, printable document per version.</li>
+    <li><code>&lt;slug&gt;-answer-keys.md</code> — a human-readable
+    answer key table for all versions, for your own reference.</li>
+    </ul></li>
+    </ul>
+    <p>If any single version fails to fill (usually a template that
+    doesn’t match the expected placeholder structure), the whole batch
+    is stopped with an error rather than silently shipping a partial set
+    — a failure on one version almost always means every version would
+    fail the same way, so fix the template (or pick a different one) and
+    try again.</p>
+    <h2 id="importing-the-csv-into-zipgrade">7. Importing the CSV into
+    ZipGrade</h2>
+    <p>The exported CSV follows ZipGrade’s answer-key import format: one
+    row per question response, columns
+    <code>Key, Question, Response/Mapping, Points, Tags</code>.</p>
+    <ul>
+    <li><code>Key</code> is the version letter (A, B, C, …).</li>
+    <li>A penalty is written as a <strong>second row</strong> for that
+    question, with <code>Response/Mapping</code> set to the literal
+    <code>[a&amp;i]</code> (ZipGrade’s “attempted but incorrect” point
+    value) and <code>Points</code> set to the penalty amount.</li>
+    <li>The file always contains every version’s key together —
+    importing it replaces the quiz’s entire answer key, so keep all
+    versions in one import rather than importing them one at a
+    time.</li>
+    </ul>
+    <h2 id="using-ai-to-convert-an-existing-question-bank">8. Using AI
+    to convert an existing question bank</h2>
+    <p>If you already have questions in another format — a Word
+    document, a spreadsheet, a PDF, a different quiz tool’s export — an
+    AI assistant can usually convert them to this AMC-TXT subset
+    quickly. A few things make that conversion go smoothly:</p>
+    <p><strong>Give the assistant the exact grammar, not just an
+    example.</strong> A model shown only one sample question will often
+    improvise syntax that looks plausible but isn’t actually supported
+    here — brackets in the wrong order, invented fields, or multi-line
+    choices without a leading <code>-</code>. The prompt below spells
+    out the grammar with examples, so nothing is left to guesswork.</p>
+    <p><strong>Ready-to-use prompt</strong> — copy the whole block,
+    paste it into your AI assistant, and attach or paste your source
+    question bank after it:</p>
+    <pre class="prompt"><code>You are converting a question bank into a plain-text format called
+AMC-TXT (a restricted subset). Follow this grammar exactly — do not
+invent syntax, fields, or formatting beyond what&#39;s described here.
+
+FORMAT RULES
+- A line starting with `*` begins a new question, followed by the
+  question text.
+- A line starting with `+` is a correct choice; a line starting with
+  `-` is a wrong choice. Each question needs exactly one `+` and at
+  most 5 choices total (`+` and `-` combined).
+- A line that doesn&#39;t start with `*`, `+`, `-`, or `#`, and isn&#39;t
+  blank, continues the text of the line above it (for wrapping long
+  text across lines).
+- A blank line ends the current question.
+- Lines starting with `#` are comments and are ignored.
+- Optional, right after the `*` and before the question text:
+  `[id=...]` (a short tag) and/or `{b=SCORE,m=PENALTY}` (points for a
+  correct answer, points lost for a wrong one — both optional, default
+  b=1, m=0). Example: `*[id=osi-01]{b=2,m=-0.5} Question text`.
+- Optional metadata lines before the very first question, one per
+  line: `Title: ...`, `Presentation: ...`, `Author: ...` (or any
+  `Key: value`).
+- Optional groups: `*( intro text` opens a group, `*) outro text`
+  closes it. Every group opened must be closed. Groups cannot be
+  nested. Questions inside a group are still written with `*` exactly
+  like any other question.
+
+EXAMPLE — basic question:
+*[id=osi-01]{b=2,m=-0.5} At which OSI layer does a TLS session terminate?
++ Presentation
+- Network
+- Data link
+- Physical
+
+EXAMPLE — metadata + a plain question (no id/scoring needed):
+Title: Cyber Warfare — Mid-term
+Presentation: 15 questions, 90 minutes, no materials.
+
+* Which technique gathers information without touching the target?
++ Passive reconnaissance
+- Port scanning
+- Banner grabbing
+
+EXAMPLE — a group of related questions:
+*( Questions about the Enigma machine.
+* What kind of cipher device was the Enigma?
++ Electromechanical rotor cipher
+- Digital block cipher
+- One-time pad generator
+* Who led the British effort to break Enigma at Bletchley Park?
++ Alan Turing
+- Winston Churchill
+- Claude Shannon
+*) End of Enigma questions.
+
+CONSTRAINTS
+- Single correct answer only — never &quot;select all that apply.&quot;
+- Maximum 5 choices per question.
+- No LaTeX, no images, no tables inside a question.
+- Every group opened with `*(` must be closed with `*)`.
+
+YOUR TASK
+Convert the attached/pasted question bank into this format. Do not add
+scoring braces, IDs, or groups unless I ask for them — keep it as
+plain `*`/`+`/`-` questions unless the source clearly needs a group.
+Leave a blank line between questions.
+
+If a question has more than one correct answer, is open-ended, or
+depends on an image, diagram, or table that can&#39;t be described in
+plain text, do NOT guess at a conversion — list it separately at the
+end under a &quot;COULD NOT CONVERT&quot; heading with a short reason.</code></pre>
+    <p>That last instruction matters — it’s much easier to review a
+    short list of flagged questions and handle them by hand than to
+    discover a silently mis-converted question during a live exam.</p>
+    <p><strong>After conversion, always:</strong></p>
+    <ol type="1">
+    <li>Paste the result into Exam Bench and check the Problems panel
+    for errors before doing anything else.</li>
+    <li>Skim the preview pane — a wrong answer marked as correct, or a
+    truncated choice, is easy for both a human and a model to miss on a
+    quick read.</li>
+    <li>Spot-check the choice count on questions that originally had
+    more than 5 options — the model may have dropped one silently rather
+    than flagging it, if it wasn’t told not to.</li>
+    </ol>
+  </article>
+
+  <footer class="mt-16 pt-6 border-t border-paper-edge dark:border-ink-600 font-mono text-[11px] text-ink-400 flex justify-end">
+    <a href="index.html" class="hover:text-signal-deep dark:hover:text-signal">Open Exam Bench →</a>
+  </footer>
+
+</div>
+
+<script>
+  // Theme toggle
+  (function () {
+    var root = document.documentElement;
+    var sun = document.getElementById('icon-sun');
+    var moon = document.getElementById('icon-moon');
+    function sync() {
+      var dark = root.classList.contains('dark');
+      sun.classList.toggle('hidden', !dark);
+      moon.classList.toggle('hidden', dark);
+    }
+    document.getElementById('theme-toggle').addEventListener('click', function () {
+      var dark = !root.classList.contains('dark');
+      root.classList.toggle('dark', dark);
+      try { localStorage.setItem('exam-bench-theme', dark ? 'dark' : 'light'); } catch (e) {}
+      sync();
+    });
+    sync();
+  })();
+
+  // Copy button on the ready-to-use AI prompt (pre.prompt, from the
+  // markdown's ```{.prompt} fence)
+  document.querySelectorAll('pre.prompt').forEach(function (pre) {
+    var text = (pre.querySelector('code') || pre).textContent;
+    pre.classList.add('relative');
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.textContent = 'Copy';
+    btn.className = 'absolute top-3 right-3 font-mono text-[11px] px-2.5 py-1 rounded-md border ' +
+      'border-paper-edge dark:border-ink-600 bg-paper dark:bg-ink-900 text-ink-500 dark:text-ink-400 ' +
+      'hover:border-signal hover:text-signal-deep dark:hover:text-signal transition';
+    btn.addEventListener('click', function () {
+      navigator.clipboard.writeText(text).then(function () {
+        btn.textContent = 'Copied!';
+      }, function () {
+        btn.textContent = 'Copy failed';
+      }).finally(function () {
+        setTimeout(function () { btn.textContent = 'Copy'; }, 1800);
+      });
+    });
+    pre.appendChild(btn);
+  });
+</script>
+</body>
+</html>

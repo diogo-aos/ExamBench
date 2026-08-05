@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="$lang$">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>$if(title)$$title$$else$Exam Bench — User Manual$endif$</title>
+
+<!-- Theme applied before paint, so there's no light->dark flash on load.
+     Shares the exam-bench-theme localStorage key with docs/index.html,
+     so a preference set on one page is respected on the other. -->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem('exam-bench-theme');
+      var dark = saved ? saved === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+      if (dark) document.documentElement.classList.add('dark');
+    } catch (e) {}
+  })();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+
+<!-- Tailwind, unbuilt — utility classes are compiled in the browser at runtime. -->
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        colors: {
+          paper: '#f7f4ed',
+          'paper-edge': '#e6e0d3',
+          ink: { 900: '#0e1218', 800: '#151a22', 700: '#1d242e', 600: '#2a3340', 500: '#3c4757', 400: '#5a6675' },
+          signal: { DEFAULT: '#e8b33c', deep: '#a5791c' },
+          teal:   { DEFAULT: '#4fa8a5', deep: '#2e706e' },
+          rust: '#d8543c'
+        },
+        fontFamily: {
+          display: ['Space Grotesk', 'system-ui', 'sans-serif'],
+          mono: ['IBM Plex Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+          serif: ['Source Serif 4', 'Georgia', 'serif']
+        }
+      }
+    }
+  };
+</script>
+</head>
+<body class="bg-paper text-ink-900 dark:bg-ink-900 dark:text-paper font-serif antialiased transition-colors">
+<div class="max-w-3xl mx-auto px-6 py-14 sm:px-8 sm:py-20">
+
+  <div class="flex justify-end mb-4">
+    <button id="theme-toggle" type="button" aria-label="Toggle light/dark theme"
+      class="inline-grid h-8 w-8 place-items-center rounded-md text-ink-400 hover:bg-black/5 dark:text-ink-400 dark:hover:bg-white/10 transition">
+      <svg id="icon-sun" class="h-4 w-4 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+        <circle cx="12" cy="12" r="4"></circle>
+        <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>
+      </svg>
+      <svg id="icon-moon" class="h-4 w-4 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.8A9 9 0 1111.2 3 7 7 0 0021 12.8z"></path>
+      </svg>
+    </button>
+  </div>
+
+  <header class="mb-10 pb-8 border-b border-paper-edge dark:border-ink-600">
+    <div class="font-mono text-[11px] tracking-[0.22em] uppercase text-signal-deep dark:text-signal">Exam Bench</div>
+    <h1 class="font-display font-bold text-3xl sm:text-4xl tracking-tight mt-2 mb-1.5">$if(title)$$title$$else$User Manual$endif$</h1>
+    $if(subtitle)$<p class="font-serif italic text-lg text-ink-500 dark:text-ink-400 mb-1.5">$subtitle$</p>$endif$
+    $if(author)$<p class="font-mono text-xs text-ink-400">$for(author)$$author$$sep$ · $endfor$$if(date)$ — $date$$endif$</p>$endif$
+  </header>
+
+  $if(toc)$
+  <nav class="rounded-xl border border-paper-edge dark:border-ink-600 bg-white dark:bg-ink-800 px-6 py-5 mb-10
+              [&_ul]:list-none [&_ul]:pl-0 [&_ul_ul]:pl-4 [&_ul_ul]:mt-1 [&_li]:my-1
+              [&_a]:font-display [&_a]:no-underline [&_a]:text-ink-700 dark:[&_a]:text-ink-400
+              hover:[&_a]:text-signal-deep dark:hover:[&_a]:text-signal">
+    <p class="font-mono text-[10.5px] tracking-[0.18em] uppercase text-ink-400 mb-2">Contents</p>
+    $toc$
+  </nav>
+  $endif$
+
+  <article class="prose prose-neutral dark:prose-invert max-w-none
+                   prose-headings:font-display prose-headings:tracking-tight
+                   prose-h2:border-t prose-h2:border-paper-edge dark:prose-h2:border-ink-600 prose-h2:pt-6 first:prose-h2:border-0 first:prose-h2:pt-0
+                   prose-h3:text-teal-deep dark:prose-h3:text-teal
+                   prose-a:text-teal-deep dark:prose-a:text-teal hover:prose-a:text-signal-deep dark:hover:prose-a:text-signal
+                   prose-code:font-mono prose-pre:font-mono
+                   prose-th:font-mono prose-th:text-xs prose-th:uppercase prose-th:tracking-wide prose-th:text-ink-400
+                   prose-blockquote:border-signal prose-blockquote:font-serif prose-blockquote:not-italic">
+    $body$
+  </article>
+
+  <footer class="mt-16 pt-6 border-t border-paper-edge dark:border-ink-600 font-mono text-[11px] text-ink-400 flex justify-end">
+    <a href="index.html" class="hover:text-signal-deep dark:hover:text-signal">Open Exam Bench →</a>
+  </footer>
+
+</div>
+
+<script>
+  // Theme toggle
+  (function () {
+    var root = document.documentElement;
+    var sun = document.getElementById('icon-sun');
+    var moon = document.getElementById('icon-moon');
+    function sync() {
+      var dark = root.classList.contains('dark');
+      sun.classList.toggle('hidden', !dark);
+      moon.classList.toggle('hidden', dark);
+    }
+    document.getElementById('theme-toggle').addEventListener('click', function () {
+      var dark = !root.classList.contains('dark');
+      root.classList.toggle('dark', dark);
+      try { localStorage.setItem('exam-bench-theme', dark ? 'dark' : 'light'); } catch (e) {}
+      sync();
+    });
+    sync();
+  })();
+
+  // Copy button on the ready-to-use AI prompt (pre.prompt, from the
+  // markdown's ```{.prompt} fence)
+  document.querySelectorAll('pre.prompt').forEach(function (pre) {
+    var text = (pre.querySelector('code') || pre).textContent;
+    pre.classList.add('relative');
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.textContent = 'Copy';
+    btn.className = 'absolute top-3 right-3 font-mono text-[11px] px-2.5 py-1 rounded-md border ' +
+      'border-paper-edge dark:border-ink-600 bg-paper dark:bg-ink-900 text-ink-500 dark:text-ink-400 ' +
+      'hover:border-signal hover:text-signal-deep dark:hover:text-signal transition';
+    btn.addEventListener('click', function () {
+      navigator.clipboard.writeText(text).then(function () {
+        btn.textContent = 'Copied!';
+      }, function () {
+        btn.textContent = 'Copy failed';
+      }).finally(function () {
+        setTimeout(function () { btn.textContent = 'Copy'; }, 1800);
+      });
+    });
+    pre.appendChild(btn);
+  });
+</script>
+</body>
+</html>
