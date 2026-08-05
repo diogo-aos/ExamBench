@@ -14,7 +14,7 @@
   (function () {
     try {
       var saved = localStorage.getItem('exam-bench-theme');
-      var dark = saved ? saved === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+      var dark = saved === 'dark'; // light is the default until the user explicitly picks dark
       if (dark) document.documentElement.classList.add('dark');
     } catch (e) {}
   })();
@@ -46,6 +46,7 @@
         <path d="M21 12.8A9 9 0 1111.2 3 7 7 0 0021 12.8z"></path>
       </svg>
     </button>
+    <a href="exam-bench-manual.html" target="_blank" rel="noopener" class="btn-ghost inline-flex items-center">Manual</a>
     <button id="btn-sample" class="btn-ghost">Load sample</button>
     <button id="btn-scoring" class="btn-neutral">Scoring</button>
     <button id="btn-versions" class="btn-primary">Versions</button>

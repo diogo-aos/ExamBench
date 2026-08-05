@@ -28,8 +28,7 @@ pandoc "$SRC" \
   --toc \
   --toc-depth=2 \
   --metadata title="Exam Bench — User Manual" \
-  --metadata subtitle="From question bank to printable exams" \
-  --metadata author="CIAFA — Portuguese Air Force Academy" \
+  --metadata author="CAP Diogo Silva" \
   --metadata lang=en \
   -o "$OUT"
 
