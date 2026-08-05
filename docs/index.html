@@ -48,8 +48,7 @@
     </button>
     <button id="btn-sample" class="btn-ghost">Load sample</button>
     <button id="btn-scoring" class="btn-neutral">Scoring</button>
-    <button id="btn-versions" class="btn-neutral">Versions</button>
-    <button id="btn-export" class="btn-primary">Export</button>
+    <button id="btn-versions" class="btn-primary">Versions</button>
   </div>
 </header>
 
@@ -137,10 +136,7 @@
       </div>
       <p class="font-mono text-[10.5px] text-slate-500 dark:text-slate2">"Shuffle questions &amp; groups" reorders standalone questions and whole groups relative to each other — a group always stays together. "Shuffle within groups" additionally reorders the questions inside each group.</p>
 
-      <div class="flex items-center gap-3 flex-wrap">
-        <button id="btn-generate" class="btn-primary">Generate</button>
-        <span class="font-mono text-[11px] text-slate-500 dark:text-slate2">Same seed always rebuilds the same versions.</span>
-      </div>
+      <p class="font-mono text-[11px] text-slate-500 dark:text-slate2">Versions regenerate automatically whenever you change these settings — same seed always rebuilds the same versions.</p>
 
       <div id="ver-out" class="space-y-3"></div>
 
@@ -155,12 +151,13 @@
       </div>
 
       <div>
-        <div class="flex items-center gap-3 mb-2">
+        <div class="flex items-center gap-2 mb-2 flex-wrap">
           <div class="field-label">FILES</div>
-          <button id="btn-generate-docs" class="mini-btn ml-auto">generate output docs</button>
+          <button id="btn-generate-docs" class="btn-primary ml-auto">Generate output docs</button>
+          <button id="btn-download-all" class="btn-neutral">Download all</button>
         </div>
         <div id="file-out" class="flex flex-col border edge rounded-lg overflow-hidden"></div>
-        <p class="font-mono text-[11px] text-slate-500 dark:text-slate2 mt-3">Filling the ODTs is the expensive step — it only runs when you click "generate output docs" (or Export), not on every settings change. Export downloads everything as one .zip; if your browser blocks it, grab files one at a time here.</p>
+        <p class="font-mono text-[11px] text-slate-500 dark:text-slate2 mt-3">Filling the ODTs is the expensive step — it only runs when you click "Generate output docs" (or "Download all"), not on every settings change. "Download all" downloads everything as one .zip; if your browser blocks it, grab files one at a time here.</p>
       </div>
     </div>
   </div>
@@ -1280,19 +1277,18 @@ Author: CIAFA
     }
   }
 
-  async function exportAll() {
+  async function downloadAll() {
     if (!versions.length) generate();
-    if (!versions.length) { toast('Nothing to export — fix the questions first.'); return; }
+    if (!versions.length) { toast('Nothing to download — fix the questions first.'); return; }
     const token = ++odtBuildToken; // invalidate/supersede any in-flight generateOutputDocs() run
 
     let templateBytes;
     try {
       templateBytes = await resolveTemplateBytes();
     } catch (err) {
-      $('modal').classList.remove('hidden');
       toast(err.kind === 'template-source'
         ? 'Only uploaded ODT templates are available right now.'
-        : `Can't export — ${err.message || err}`, 4500);
+        : `Can't download — ${err.message || err}`, 4500);
       return;
     }
 
@@ -1319,7 +1315,6 @@ Author: CIAFA
       Download.blob(`${slug()}-exam-pack.zip`, Zip.build(files));
       toast(`${files.length} files in ${slug()}-exam-pack.zip`, 3400);
     } catch {
-      $('modal').classList.remove('hidden');
       toast('Zip failed — save the files one by one below.', 4000);
     }
   }
@@ -1393,9 +1388,8 @@ Author: CIAFA
       if (e.key === 'Escape') { $('modal').classList.add('hidden'); $('scoring-modal').classList.add('hidden'); }
     });
 
-    $('btn-generate').onclick = generate;
     $('btn-generate-docs').onclick = generateOutputDocs;
-    $('btn-export').onclick   = exportAll;
+    $('btn-download-all').onclick  = downloadAll;
 
     ['in-count', 'in-seed', 'in-shuffle-q', 'in-shuffle-g', 'in-shuffle-c']
       .forEach(id => $(id).addEventListener('change', generate));

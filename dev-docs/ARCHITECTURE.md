@@ -117,11 +117,20 @@ organized as sequential IIFE modules:
 12. **`Problems`** (~L894) — renders parser diagnostics under the editor.
 
 13. **`App`** (~L911) — wiring/controller: editor `input` → reparse →
-    refresh preview/problems → autosave. Owns the Versions modal
-    (generate versions, render per-version chips; an "ODT TEMPLATE"
-    picker section — default templates from `Templates.listNames()`
-    pre-selecting the first entry, a custom-upload option, per-row
-    download; and a FILES panel) and the Scoring modal (apply
+    refresh preview/problems → autosave. There is no header "Export"
+    button anymore — the header's only action button is "Versions"
+    (styled `.btn-primary`, the accent/gold color, so it stands out as
+    the app's one entry point now that Export is gone). Everything else
+    lives in the Versions modal: settings (count/seed/shuffle toggles,
+    versions regenerate automatically on `change` — there's no
+    "Generate" button either, since a manual trigger would be
+    redundant), version chips, an "ODT TEMPLATE" picker section (default
+    templates from `Templates.listNames()` pre-selecting the first
+    entry, a custom-upload option, per-row download), and a FILES panel
+    with "Generate output docs" (`.btn-primary`, the same accent style
+    the old standalone "Generate" button used — now the modal's one
+    deliberately-heavy action) and "Download all" (`.btn-neutral`) next
+    to the FILES label. The Scoring modal is separate (apply
     score/penalty/normalize, which call `ScoreOps` and rewrite
     `editor.value`).
 
@@ -145,15 +154,15 @@ organized as sequential IIFE modules:
     (`generate()`/`renderVersions()` → `resetOutputDocs()`, which just
     resets the FILES panel's ODT rows to an "idle" placeholder — no
     fetch, no `fillTemplate()` call). The actual fill only runs on an
-    explicit action: the "generate output docs" button
-    (`generateOutputDocs()`, paints pending → ready/error into the FILES
-    panel) or "Export" (`exportAll()`, which resolves the template,
-    loads `odf-kit`, fills every version, and zips
-    `buildStaticFiles()` + the filled `.odt`s into one
-    `slug()-exam-pack.zip` — no `.json` files are produced anymore).
-    Both async paths share an `odtBuildToken` race guard so a stale run
-    (superseded by a newer settings change or another
-    generate/export click) can't clobber a newer one's UI state.
+    explicit action: "Generate output docs" (`generateOutputDocs()`,
+    paints pending → ready/error into the FILES panel) or "Download all"
+    (`downloadAll()`, which resolves the template, loads `odf-kit`,
+    fills every version, and zips `buildStaticFiles()` + the filled
+    `.odt`s into one `slug()-exam-pack.zip` — no `.json` files are
+    produced anymore). Both async paths share an `odtBuildToken` race
+    guard so a stale run (superseded by a newer settings change or
+    another generate/download click) can't clobber a newer one's UI
+    state.
 
 ### Data flow
 ```
@@ -161,11 +170,11 @@ editor textarea → AMCParser.parse() → parsed{meta,questions,blocks,problems}
                                             │
                           ┌─────────────────┼─────────────────┐
                           ▼                 ▼                 ▼
-                      Preview.render   Problems.render   Versions.build (on Generate)
+                      Preview.render   Problems.render   Versions.build (settings change, automatic)
                                                                 │
                                                      resetOutputDocs (cheap: CSV/MD + idle ODT placeholder)
                                                                 │
-                                            ┄┄┄ explicit click: "generate output docs" / "Export" ┄┄┄
+                                    ┄┄┄ explicit click: "Generate output docs" / "Download all" ┄┄┄
                                                                 │
                               ┌─────────────────────────────────┤
                               ▼                                 ▼
@@ -229,4 +238,9 @@ sync automatically.
   tried and explicitly reverted because it made every shuffle/seed
   tweak pay for a template fetch + `odf-kit` load + fill. Those changes
   must stay limited to the cheap `resetOutputDocs()` path; only
-  `generateOutputDocs()`/`exportAll()` may call `fillTemplate()`.
+  `generateOutputDocs()`/`downloadAll()` may call `fillTemplate()`.
+- There is no "Generate" button and no header "Export" button anymore
+  — both were removed as redundant/relocated. Don't re-add a manual
+  "Generate" trigger (versions already regenerate on every settings
+  `change`); if a top-level export entry point is wanted again, put it
+  in the Versions modal next to FILES, not back in the header.
