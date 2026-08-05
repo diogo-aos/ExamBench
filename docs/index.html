@@ -155,9 +155,12 @@
       </div>
 
       <div>
-        <div class="field-label mb-2">FILES</div>
+        <div class="flex items-center gap-3 mb-2">
+          <div class="field-label">FILES</div>
+          <button id="btn-generate-docs" class="mini-btn ml-auto">generate output docs</button>
+        </div>
         <div id="file-out" class="flex flex-col border edge rounded-lg overflow-hidden"></div>
-        <p class="font-mono text-[11px] text-slate-500 dark:text-slate2 mt-3">Export downloads all of these as one .zip. If your browser blocks it, grab them one at a time here.</p>
+        <p class="font-mono text-[11px] text-slate-500 dark:text-slate2 mt-3">Filling the ODTs is the expensive step — it only runs when you click "generate output docs" (or Export), not on every settings change. Export downloads everything as one .zip; if your browser blocks it, grab files one at a time here.</p>
       </div>
     </div>
   </div>
@@ -612,7 +615,7 @@ const Exporters = (() => {
    template currently in use — switching selection evicts it.
    ════════════════════════════════════════════════════════════════════ */
 const Templates = (() => {
-  const BASE = 'https://github.com/diogo-aos/ExamBench/raw/refs/heads/main/templates/';
+  const BASE = 'templates/'; // relative to this page — GitHub Pages serves docs/ as the site root, so docs/templates/ is a sibling of docs/index.html
   let namesPromise = null;          // list.txt names — cached forever once it succeeds
   let selectedCache = null;         // { name, bytes } | null — single slot, evicted on selection change
   let fillTemplateFnPromise = null; // odf-kit's fillTemplate — cached forever once it succeeds
@@ -1035,7 +1038,7 @@ Author: CIAFA
           ${v.items.map(it => chipFor(it)).join('')}
         </div>
       </div>`).join('');
-    renderFiles();
+    resetOutputDocs();
   }
 
   function chipFor(it) {
@@ -1116,7 +1119,7 @@ Author: CIAFA
     tplSelection = { kind: 'default', name };
     paintTemplateList();
     scheduleSave();
-    renderFiles();
+    resetOutputDocs();
   }
 
   async function handleCustomUpload(file) {
@@ -1127,14 +1130,14 @@ Author: CIAFA
     $('tpl-upload').value = '';
     paintTemplateList();
     scheduleSave();
-    renderFiles();
+    resetOutputDocs();
   }
 
   function clearCustomTemplate() {
     Templates.evictSelected();
     tplSelection = { kind: 'none' };
     renderTemplatePicker();
-    renderFiles();
+    resetOutputDocs();
   }
 
   async function downloadTemplate(name) {
@@ -1191,7 +1194,11 @@ Author: CIAFA
       </div>`);
 
     let odtRows;
-    if (odtState.status === 'pending') {
+    if (odtState.status === 'idle') {
+      odtRows = [`<div class="flex items-center px-3 h-9 border-b edge-soft last:border-0 surface-sunk">
+        <span class="font-mono text-[11.5px] text-ink-400 dark:text-ink-500">not generated yet — click "generate output docs" above</span>
+      </div>`];
+    } else if (odtState.status === 'pending') {
       odtRows = [`<div class="flex items-center px-3 h-9 border-b edge-soft last:border-0 surface-sunk">
         <span class="font-mono text-[11.5px] text-ink-400 dark:text-ink-500">filling ODT versions…</span>
       </div>`];
@@ -1227,11 +1234,27 @@ Author: CIAFA
     });
   }
 
-  async function renderFiles() {
-    const token = ++odtBuildToken;
+  /* Cheap: (re)paints the CSV/MD rows (instant, JSON-derived) and resets
+     the ODT portion to an idle placeholder. Called whenever versions or
+     the template selection change — deliberately does NOT fetch a
+     template or call fillTemplate(), so tweaking shuffle settings or
+     the seed never triggers the expensive fill. Also invalidates any
+     fill that's still in flight from a previous "generate output docs"
+     click, since its result would now be stale. */
+  function resetOutputDocs() {
+    ++odtBuildToken;
     const staticFiles = buildStaticFiles();
     if (!versions.length) { $('file-out').innerHTML = ''; return; }
+    paintFileRows(staticFiles, { status: 'idle' });
+  }
 
+  /* Expensive: resolves the template, loads odf-kit, and fills every
+     version — only runs on an explicit "generate output docs" click
+     (or Export). */
+  async function generateOutputDocs() {
+    if (!versions.length) { toast('Nothing to generate — build versions first.'); return; }
+    const token = ++odtBuildToken;
+    const staticFiles = buildStaticFiles();
     paintFileRows(staticFiles, { status: 'pending' });
 
     let templateBytes, fillTemplate;
@@ -1260,6 +1283,7 @@ Author: CIAFA
   async function exportAll() {
     if (!versions.length) generate();
     if (!versions.length) { toast('Nothing to export — fix the questions first.'); return; }
+    const token = ++odtBuildToken; // invalidate/supersede any in-flight generateOutputDocs() run
 
     let templateBytes;
     try {
@@ -1288,7 +1312,9 @@ Author: CIAFA
       return;
     }
 
-    const files = [...buildStaticFiles(), ...odtFiles];
+    const staticFiles = buildStaticFiles();
+    if (token === odtBuildToken) paintFileRows(staticFiles, { status: 'ready', files: odtFiles }); // keep the modal panel in sync, unless superseded by a newer settings/template change or generate-docs click
+    const files = [...staticFiles, ...odtFiles];
     try {
       Download.blob(`${slug()}-exam-pack.zip`, Zip.build(files));
       toast(`${files.length} files in ${slug()}-exam-pack.zip`, 3400);
@@ -1368,6 +1394,7 @@ Author: CIAFA
     });
 
     $('btn-generate').onclick = generate;
+    $('btn-generate-docs').onclick = generateOutputDocs;
     $('btn-export').onclick   = exportAll;
 
     ['in-count', 'in-seed', 'in-shuffle-q', 'in-shuffle-g', 'in-shuffle-c']
