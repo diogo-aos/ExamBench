@@ -145,8 +145,8 @@
         <div id="tpl-status" class="font-mono text-[11px] text-slate-500 dark:text-slate2 mb-2"></div>
         <div id="tpl-list" class="flex flex-col border edge rounded-lg overflow-hidden"></div>
         <label role="button" class="mini-btn mt-2.5 inline-flex items-center gap-1.5">
-          upload custom .odt
-          <input id="tpl-upload" type="file" accept=".odt,application/vnd.oasis.opendocument.text" class="hidden">
+          upload custom .odt(s)
+          <input id="tpl-upload" type="file" accept=".odt,application/vnd.oasis.opendocument.text" multiple class="hidden">
         </label>
       </div>
 
@@ -398,6 +398,41 @@ const Store = (() => {
   return {
     load: ()      => tx('readonly',  s => s.get(KEY)),
     save: (state) => tx('readwrite', s => s.put(state, KEY))
+  };
+})();
+
+
+/* ════════════════════════════════════════════════════════════════════
+   2b. CustomTemplates — IndexedDB persistence for user-uploaded ODT
+   templates, so they survive a page refresh. Separate DB from Store's
+   (different lifecycle/shape — arbitrary-sized binary blobs vs. the
+   single app-state record).
+   ════════════════════════════════════════════════════════════════════ */
+const CustomTemplates = (() => {
+  const DB = 'exam-bench-templates', STORE = 'templates', VERSION = 1;
+  let dbp = null;
+
+  const open = () => dbp || (dbp = new Promise((res, rej) => {
+    const r = indexedDB.open(DB, VERSION);
+    r.onupgradeneeded = () => r.result.createObjectStore(STORE, { keyPath: 'id', autoIncrement: true });
+    r.onsuccess = () => res(r.result);
+    r.onerror   = () => rej(r.error);
+  }));
+
+  const tx = async (mode, fn) => {
+    const db = await open();
+    return new Promise((res, rej) => {
+      const t = db.transaction(STORE, mode);
+      const req = fn(t.objectStore(STORE));
+      req.onsuccess = () => res(req.result);
+      req.onerror   = () => rej(req.error);
+    });
+  };
+
+  return {
+    list:   ()            => tx('readonly',  s => s.getAll()),          // [{id, name, bytes}]
+    add:    (name, bytes) => tx('readwrite', s => s.add({ name, bytes })), // resolves to the new id
+    remove: (id)           => tx('readwrite', s => s.delete(id))
   };
 })();
 
@@ -916,9 +951,12 @@ const App = (() => {
   let versions = [];
   let saveTimer = null;
 
-  // ODT template selection: {kind:'none'} | {kind:'default', name} | {kind:'custom', name, bytes}
+  // ODT template selection: {kind:'none'} | {kind:'default', name} | {kind:'custom', id}
   let tplSelection = { kind: 'none' };
-  let pendingTemplateName = null;   // restored from Store, applied once list.txt names are known
+  let customTemplates = [];         // [{id, name, bytes}] — loaded from CustomTemplates (IndexedDB) on init,
+                                     // stay in this list regardless of which one is currently selected
+  let pendingSelection = null;      // {kind:'default', name} | {kind:'custom', id} — restored from Store,
+                                     // applied once list.txt names / customTemplates are known
   let lastKnownTplNames = [];
   let odtBuildToken = 0;            // race guard for overlapping async fill runs
 
@@ -984,7 +1022,9 @@ Author: CIAFA
     shuffleQuestions: $('in-shuffle-q').checked,
     shuffleWithinGroups: $('in-shuffle-g').checked,
     shuffleChoices: $('in-shuffle-c').checked,
-    templateName: tplSelection.kind === 'default' ? tplSelection.name : null
+    templateSelection: tplSelection.kind === 'default' ? { kind: 'default', name: tplSelection.name }
+      : tplSelection.kind === 'custom' ? { kind: 'custom', id: tplSelection.id }
+      : null
   });
 
   function scheduleSave() {
@@ -1053,19 +1093,41 @@ Author: CIAFA
 
   /* ── ODT template selection ─────────────────────────────────────── */
 
+  /* Uploaded custom templates stay in the list (and in IndexedDB) no
+     matter what's currently selected — only an explicit "remove" drops
+     one. Picking a default template only evicts Templates' single-slot
+     *default-bytes* cache; it never touches customTemplates. */
+
+  const localTemplateId = () => 'local-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+  // dataset values are always strings, but CustomTemplates' autoIncrement
+  // IndexedDB keys are numbers — reconstruct the original type so
+  // equality checks (and IDBObjectStore.delete, which is key-type
+  // sensitive) match; localTemplateId()'s fallback ids are left as-is.
+  const parseTplId = raw => /^\d+$/.test(raw) ? Number(raw) : raw;
+
   /* Single source of truth for "what bytes do we fill with" — works
      even if the picker UI was never opened (e.g. Export clicked
-     directly), lazily resolving the default selection on first use. */
+     directly), lazily resolving a selection (restored, or the first
+     default) on first use. */
   async function resolveTemplateBytes() {
-    if (tplSelection.kind === 'custom') return tplSelection.bytes;
-    if (tplSelection.kind === 'default') return Templates.selectBytes(tplSelection.name);
-    const names = await Templates.listNames();
-    if (!names.length) throw Object.assign(new Error('No templates available'), { kind: 'template-source' });
-    const name = (pendingTemplateName && names.includes(pendingTemplateName)) ? pendingTemplateName : names[0];
-    tplSelection = { kind: 'default', name };
-    lastKnownTplNames = names;
-    paintTemplateList();
-    return Templates.selectBytes(name);
+    if (tplSelection.kind === 'none') {
+      if (pendingSelection?.kind === 'custom' && customTemplates.some(t => t.id === pendingSelection.id)) {
+        tplSelection = { kind: 'custom', id: pendingSelection.id };
+      } else {
+        const names = await Templates.listNames(); // may throw — propagates as a template-source error
+        lastKnownTplNames = names;
+        if (!names.length) throw Object.assign(new Error('No templates available'), { kind: 'template-source' });
+        const wantName = pendingSelection?.kind === 'default' ? pendingSelection.name : null;
+        tplSelection = { kind: 'default', name: (wantName && names.includes(wantName)) ? wantName : names[0] };
+      }
+      paintTemplateList();
+    }
+    if (tplSelection.kind === 'custom') {
+      const t = customTemplates.find(t => t.id === tplSelection.id);
+      if (!t) throw Object.assign(new Error('Selected custom template no longer exists'), { kind: 'template-source' });
+      return t.bytes;
+    }
+    return Templates.selectBytes(tplSelection.name);
   }
 
   async function renderTemplatePicker() {
@@ -1074,40 +1136,46 @@ Author: CIAFA
       const names = await Templates.listNames();
       lastKnownTplNames = names;
       $('tpl-status').textContent = '';
-      if (tplSelection.kind === 'none' && names.length) {
-        const name = (pendingTemplateName && names.includes(pendingTemplateName)) ? pendingTemplateName : names[0];
-        tplSelection = { kind: 'default', name };
-      }
-      paintTemplateList();
     } catch (err) {
+      lastKnownTplNames = [];
       $('tpl-status').textContent = `Only uploaded ODT templates are available right now — GitHub templates couldn't be reached (${err.message || err}).`;
-      $('tpl-list').innerHTML = '';
     }
+    if (tplSelection.kind === 'none') {
+      if (pendingSelection?.kind === 'custom' && customTemplates.some(t => t.id === pendingSelection.id)) {
+        tplSelection = { kind: 'custom', id: pendingSelection.id };
+      } else if (pendingSelection?.kind === 'default' && lastKnownTplNames.includes(pendingSelection.name)) {
+        tplSelection = { kind: 'default', name: pendingSelection.name };
+      } else if (lastKnownTplNames.length) {
+        tplSelection = { kind: 'default', name: lastKnownTplNames[0] };
+      }
+    }
+    paintTemplateList(); // still shows custom templates even if the default list failed to load
   }
 
   function paintTemplateList() {
-    const rows = lastKnownTplNames.map(name => {
+    const defaultRows = lastKnownTplNames.map(name => {
       const checked = tplSelection.kind === 'default' && tplSelection.name === name ? 'checked' : '';
       return `
       <div class="flex items-center gap-3 px-3 h-9 border-b edge-soft last:border-0 surface-sunk">
         <label class="toggle-row flex-1 min-w-0">
-          <input type="radio" name="tpl-choice" value="${escHtml(name)}" class="accent-signal" ${checked}>
+          <input type="radio" name="tpl-choice" class="accent-signal" data-kind="default" data-name="${escHtml(name)}" ${checked}>
           <span class="font-mono text-[11.5px] truncate">${escHtml(name)}</span>
         </label>
         <button class="mini-btn" data-act="download-tpl" data-name="${escHtml(name)}">download</button>
       </div>`;
     });
-    if (tplSelection.kind === 'custom') {
-      rows.push(`
+    const customRows = customTemplates.map(t => {
+      const checked = tplSelection.kind === 'custom' && tplSelection.id === t.id ? 'checked' : '';
+      return `
       <div class="flex items-center gap-3 px-3 h-9 border-b edge-soft last:border-0 surface-sunk">
         <label class="toggle-row flex-1 min-w-0">
-          <input type="radio" name="tpl-choice" value="__custom__" checked class="accent-signal">
-          <span class="font-mono text-[11.5px] truncate">${escHtml(tplSelection.name)} (custom)</span>
+          <input type="radio" name="tpl-choice" class="accent-signal" data-kind="custom" data-id="${t.id}" ${checked}>
+          <span class="font-mono text-[11.5px] truncate">${escHtml(t.name)} (custom)</span>
         </label>
-        <button class="mini-btn" data-act="clear-custom">clear</button>
-      </div>`);
-    }
-    $('tpl-list').innerHTML = rows.join('');
+        <button class="mini-btn" data-act="remove-custom" data-id="${t.id}">remove</button>
+      </div>`;
+    });
+    $('tpl-list').innerHTML = defaultRows.join('') + customRows.join('');
   }
 
   function selectDefaultTemplate(name) {
@@ -1119,21 +1187,52 @@ Author: CIAFA
     resetOutputDocs();
   }
 
-  async function handleCustomUpload(file) {
-    if (!file) return;
-    const bytes = new Uint8Array(await file.arrayBuffer());
+  function selectCustomTemplate(id) {
+    if (tplSelection.kind === 'custom' && tplSelection.id === id) return;
     Templates.evictSelected();
-    tplSelection = { kind: 'custom', name: file.name, bytes };
-    $('tpl-upload').value = '';
+    tplSelection = { kind: 'custom', id };
     paintTemplateList();
     scheduleSave();
     resetOutputDocs();
   }
 
-  function clearCustomTemplate() {
+  /* Accepts a FileList/array — supports uploading several templates at
+     once. Each one is persisted to IndexedDB (CustomTemplates) so it
+     survives a reload; a template that fails to save there is still
+     usable for this session (best effort), just flagged as not durable. */
+  async function handleCustomUpload(files) {
+    const list = Array.from(files || []);
+    if (!list.length) return;
+    let lastId = null;
+    for (const file of list) {
+      const bytes = new Uint8Array(await file.arrayBuffer());
+      let id;
+      try {
+        id = await CustomTemplates.add(file.name, bytes);
+      } catch (err) {
+        id = localTemplateId();
+        toast(`"${file.name}" will only last this session — couldn't save it locally (${err.message || err}).`, 5000);
+      }
+      customTemplates.push({ id, name: file.name, bytes });
+      lastId = id;
+    }
+    $('tpl-upload').value = '';
     Templates.evictSelected();
-    tplSelection = { kind: 'none' };
-    renderTemplatePicker();
+    tplSelection = { kind: 'custom', id: lastId };
+    paintTemplateList();
+    scheduleSave();
+    resetOutputDocs();
+  }
+
+  async function removeCustomTemplate(id) {
+    customTemplates = customTemplates.filter(t => t.id !== id);
+    try { await CustomTemplates.remove(id); } catch { /* best effort — already gone from the in-memory list */ }
+    if (tplSelection.kind === 'custom' && tplSelection.id === id) {
+      tplSelection = { kind: 'none' };
+      resolveTemplateBytes().catch(() => {}); // best-effort: fall back to a default template if one exists
+    }
+    paintTemplateList();
+    scheduleSave();
     resetOutputDocs();
   }
 
@@ -1335,15 +1434,17 @@ Author: CIAFA
     $('modal').addEventListener('click', e => { if (e.target === $('modal')) $('modal').classList.add('hidden'); });
 
     $('tpl-list').addEventListener('change', e => {
-      if (e.target.name !== 'tpl-choice' || e.target.value === '__custom__') return;
-      selectDefaultTemplate(e.target.value);
+      if (e.target.name !== 'tpl-choice') return;
+      if (e.target.dataset.kind === 'default') selectDefaultTemplate(e.target.dataset.name);
+      else if (e.target.dataset.kind === 'custom') selectCustomTemplate(parseTplId(e.target.dataset.id));
     });
     $('tpl-list').addEventListener('click', e => {
       const dl = e.target.closest('[data-act="download-tpl"]');
       if (dl) { downloadTemplate(dl.dataset.name); return; }
-      if (e.target.closest('[data-act="clear-custom"]')) clearCustomTemplate();
+      const rm = e.target.closest('[data-act="remove-custom"]');
+      if (rm) removeCustomTemplate(parseTplId(rm.dataset.id));
     });
-    $('tpl-upload').addEventListener('change', e => handleCustomUpload(e.target.files[0]));
+    $('tpl-upload').addEventListener('change', e => handleCustomUpload(e.target.files));
 
     $('btn-scoring').onclick = () => { $('scoring-modal').classList.remove('hidden'); scoringNote(); };
     $('btn-scoring-close').onclick = () => $('scoring-modal').classList.add('hidden');
@@ -1408,10 +1509,13 @@ Author: CIAFA
         if ('shuffleQuestions' in s)     $('in-shuffle-q').checked = s.shuffleQuestions;
         if ('shuffleWithinGroups' in s)  $('in-shuffle-g').checked = s.shuffleWithinGroups;
         if ('shuffleChoices'  in s)      $('in-shuffle-c').checked = s.shuffleChoices;
-        if (s.templateName) pendingTemplateName = s.templateName;
+        if (s.templateSelection) pendingSelection = s.templateSelection;
         $('save-state').textContent = 'restored';
       }
     } catch { $('save-state').textContent = 'storage off'; }
+    try {
+      customTemplates = await CustomTemplates.list();
+    } catch { /* IndexedDB unavailable — custom templates just won't persist this session */ }
     refresh();
   }
 

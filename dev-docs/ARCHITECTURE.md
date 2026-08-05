@@ -38,6 +38,16 @@ organized as sequential IIFE modules:
 2. **`Store`** (~L367) — IndexedDB persistence. Autosaves editor source +
    settings on a 500ms debounce (`scheduleSave`), restored on load.
 
+2b. **`CustomTemplates`** (~L405) — separate IndexedDB database
+   (`exam-bench-templates`, distinct from `Store`'s DB — different
+   lifecycle/shape: arbitrary-sized binary blobs vs. one app-state
+   record) persisting user-uploaded `.odt` templates so they survive a
+   page refresh. `{ id, name, bytes }` records in an `autoIncrement`
+   object store; `list()`/`add(name, bytes)`/`remove(id)`. `App` keeps
+   its own in-memory mirror (`customTemplates`) loaded once on `init()`
+   and kept in sync on every add/remove — this module itself holds no
+   app state, it's purely the persistence layer.
+
 3. **`Rand`** (~L398) — seeded RNG: FNV-1a string hash → mulberry32 PRNG.
    Same seed always reproduces the same shuffle (Fisher–Yates).
 
@@ -125,26 +135,40 @@ organized as sequential IIFE modules:
     versions regenerate automatically on `change` — there's no
     "Generate" button either, since a manual trigger would be
     redundant), version chips, an "ODT TEMPLATE" picker section (default
-    templates from `Templates.listNames()` pre-selecting the first
-    entry, a custom-upload option, per-row download), and a FILES panel
-    with "Generate output docs" (`.btn-primary`, the same accent style
-    the old standalone "Generate" button used — now the modal's one
-    deliberately-heavy action) and "Download all" (`.btn-neutral`) next
-    to the FILES label. The Scoring modal is separate (apply
+    templates from `Templates.listNames()`, plus any user-uploaded
+    custom templates, all in one radio list — see below), and a FILES
+    panel with "Generate output docs" (`.btn-primary`, the same accent
+    style the old standalone "Generate" button used — now the modal's
+    one deliberately-heavy action) and "Download all" (`.btn-neutral`)
+    next to the FILES label. The Scoring modal is separate (apply
     score/penalty/normalize, which call `ScoreOps` and rewrite
     `editor.value`).
 
     Template selection is tracked as `tplSelection` (`{kind:'none'}` |
-    `{kind:'default', name}` | `{kind:'custom', name, bytes}`), resolved
-    lazily by `resolveTemplateBytes()` — this is the single place that
-    decides what bytes to fill with, and works even if the picker was
-    never opened (falls back to `list.txt`'s first entry, or the
-    previously-selected name restored from `Store` via
-    `pendingTemplateName`). Filling is **all-or-nothing**:
-    `fillAllVersions()` calls `fillTemplate()` once per version and
-    aborts the whole batch on the first failure (a per-version failure
-    almost always means a structural template/data mismatch, not a
-    fluke — so there's no partial-success bookkeeping).
+    `{kind:'default', name}` | `{kind:'custom', id}`), resolved lazily
+    by `resolveTemplateBytes()` — this is the single place that decides
+    what bytes to fill with, and works even if the picker was never
+    opened (falls back to a restored selection via `pendingSelection`,
+    or `list.txt`'s first entry). **Uploaded custom templates are not
+    part of `tplSelection` itself** — they live in `customTemplates`
+    (`[{id, name, bytes}]`, mirrored from `CustomTemplates`/IndexedDB),
+    and stay in that list — and in the picker — regardless of which
+    template is currently selected; only an explicit "remove" click
+    (`removeCustomTemplate(id)`) drops one, from both the in-memory list
+    and IndexedDB. `handleCustomUpload(files)` accepts multiple files at
+    once (the file input has `multiple`), persists each to
+    `CustomTemplates.add()`, and selects the last one uploaded; a
+    template whose IndexedDB write fails still gets a (non-persistent)
+    local id via `localTemplateId()` so it's usable for the rest of the
+    session. IDs round-trip through the DOM as `data-id` (always a
+    string) — `parseTplId()` reconstructs the original type (`Number`
+    for real IndexedDB keys, left as-is for the `local-…` fallback
+    strings) before comparing, since `IDBObjectStore.delete()` and
+    strict-equality lookups are key-type sensitive. Filling is
+    **all-or-nothing**: `fillAllVersions()` calls `fillTemplate()` once
+    per version and aborts the whole batch on the first failure (a
+    per-version failure almost always means a structural template/data
+    mismatch, not a fluke — so there's no partial-success bookkeeping).
 
     **Filling is deliberately deferred**, since it's the expensive step
     (a template fetch + `odf-kit` load + one `fillTemplate()` call per
@@ -232,7 +256,11 @@ sync automatically.
 - `Templates`' single-slot selected-bytes cache and no-prefetch-the-list
   behavior are deliberate memory constraints, not oversights — don't
   "helpfully" prefetch all templates or cache every template ever
-  touched.
+  touched. This applies only to *default* (GitHub-fetched) templates —
+  it's intentionally the opposite for `customTemplates`: a user-uploaded
+  template is explicit data the user handed over, so it's kept (and
+  persisted) until they explicitly remove it, not evicted on selection
+  change like the default-bytes cache.
 - Don't wire ODT filling back onto settings-change listeners
   (`in-count`/`in-seed`/`in-shuffle-*`) or template selection — that was
   tried and explicitly reverted because it made every shuffle/seed
