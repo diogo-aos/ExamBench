@@ -62,7 +62,7 @@ organized as sequential IIFE modules:
    - a combined Markdown answer key (pandoc-friendly frontmatter)
 
 7. **`Templates`** (~L614) — fetches default ODT templates from GitHub
-   raw (`raw.githubusercontent.com/diogo-aos/ExamBench/main/templates/`)
+   (`github.com/diogo-aos/ExamBench/raw/refs/heads/main/templates/`)
    and lazily loads `odf-kit`. Laziness/caching rules (deliberate, not
    incidental):
    - `listNames()` fetches `templates/list.txt` once and caches the
@@ -204,8 +204,8 @@ longer writes such files.
   with the first entry as the default selection.
 - `templates/*.odt` — the actual templates, following
   `templates/README.md`'s placeholder convention.
-- These are fetched at runtime from GitHub raw
-  (`raw.githubusercontent.com/diogo-aos/ExamBench/main/templates/`), so
+- These are fetched at runtime from GitHub
+  (`github.com/diogo-aos/ExamBench/raw/refs/heads/main/templates/`), so
   a new template only needs to be added to `list.txt` and committed/
   pushed to `main` to show up in Exam Bench's picker — no code change.
 

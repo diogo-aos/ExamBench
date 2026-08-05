@@ -612,7 +612,7 @@ const Exporters = (() => {
    template currently in use — switching selection evicts it.
    ════════════════════════════════════════════════════════════════════ */
 const Templates = (() => {
-  const BASE = 'https://raw.githubusercontent.com/diogo-aos/ExamBench/main/templates/';
+  const BASE = 'https://github.com/diogo-aos/ExamBench/raw/refs/heads/main/templates/';
   let namesPromise = null;          // list.txt names — cached forever once it succeeds
   let selectedCache = null;         // { name, bytes } | null — single slot, evicted on selection change
   let fillTemplateFnPromise = null; // odf-kit's fillTemplate — cached forever once it succeeds
