@@ -1,5 +1,7 @@
 ## 1. Overview of the workflow
 
+
+
 Exam Bench takes you from a plain-text question bank all the way to a
 set of printable, ZipGrade-ready exam versions — writing, shuffling,
 and filling the final `.odt` documents all happen **in one app, in
@@ -21,6 +23,12 @@ The steps, in order:
    **Download all** to get everything as one `.zip` (Section 6).
 7. Import the CSV from that zip into ZipGrade as the quiz's answer key
    (Section 7).
+   
+![The whole process, from questions to versions and scanning](diagram.png)
+
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Cyw5-2CZGkY?si=RHRB7pcWbRsrp2HB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+   
 
 ## 2. Writing questions — AMC-TXT (a subset)
 
