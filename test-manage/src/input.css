@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Drag-and-drop highlight state, toggled by Elm on the element under the
+   pointer during a drag. Not expressible as a static utility class since it
+   needs to beat the default border color with !important, same as the
+   original app's .group-card-over rule. */
+.drop-target-active {
+  border-color: theme('colors.teal.600') !important;
+  background-color: theme('colors.teal.50');
+}

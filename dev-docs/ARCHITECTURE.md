@@ -10,6 +10,14 @@ earlier symlink-based approach was replaced with a plain copy) and the
 single source of truth for the app's code. There is no longer a
 separate copy at the repo root.
 
+`docs/test-manage/` is a second, unrelated tool served from the same
+Pages root (at `<pages-root>/test-manage/`) — the question-bank/test
+builder covered in `test-manage/README.md`. Its source of truth is the
+sibling `test-manage/` folder (Elm + Tailwind, its own build);
+`docs/test-manage/` is a **generated deploy copy**, published by
+`test-manage/scripts/deploy-to-docs.sh`, same pattern as `docs/templates/`
+below — don't hand-edit anything under it.
+
 Exam Bench fills ODT templates itself, in-app (see the `Templates`
 module and `App`'s Versions modal below) and exports finished `.odt`
 files directly, with no JSON hand-off step. A previous companion tool,
