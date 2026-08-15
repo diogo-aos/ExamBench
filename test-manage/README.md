@@ -166,6 +166,28 @@ here, re-run `npm run build:elm` (or `npm run build`) after Elm changes.
 Then just open `index.html` in a browser (or serve the folder statically —
 either works, nothing here depends on a particular origin).
 
+## Checking and deploying
+
+Two scripts, meant to be run from anywhere (they resolve their own paths):
+
+```sh
+scripts/check.sh          # compiles Elm + Tailwind; runs the elm-test
+                           # suite too, once one exists (see issue #5) —
+                           # until then it just reports there's nothing
+                           # to run yet
+scripts/deploy-to-docs.sh # runs check.sh, then publishes index.html,
+                           # elm.js, app.css and js/db.js to
+                           # docs/test-manage/
+```
+
+`docs/` is this repo's GitHub Pages deployment root (see
+`dev-docs/ARCHITECTURE.md`), so anything published to `docs/test-manage/`
+by `deploy-to-docs.sh` is what's actually served, at
+`<pages-root>/test-manage/`. That folder is a **generated deploy copy** of
+this one — same pattern already used for `docs/templates/` — so don't
+hand-edit anything under it; change the source here and re-run the script,
+then commit both `test-manage/` and `docs/test-manage/` together.
+
 ## Known limitations / possible next steps
 
 - **Single user, no concurrency handling.** IndexedDB here is local to one
