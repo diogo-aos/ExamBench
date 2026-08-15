@@ -1,0 +1,19 @@
+{
+  "name": "test-manage",
+  "version": "2.0.0",
+  "description": "A single-page, offline-capable tool for authoring exam/quiz questions (with justifications for every option) and assembling them into tests. Built to support writing multiple-choice questions in the \"question + correct answer + wrong answers, each with a justification\" style, tagging them by topic, and composing tests out of a shared bank rather than writing each test's questions from scratch.",
+  "private": true,
+  "scripts": {
+    "build:elm": "elm make src/Main.elm --optimize --output=elm.js",
+    "build:css": "tailwindcss -i src/input.css -o app.css --minify",
+    "build": "npm run build:elm && npm run build:css",
+    "watch:css": "tailwindcss -i src/input.css -o app.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "elm": "^0.19.2-0",
+    "tailwindcss": "^3.4.19"
+  }
+}
